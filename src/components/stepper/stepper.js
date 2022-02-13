@@ -27,6 +27,7 @@ import { sendCode,verifyCode } from "action/mobileCode";
 import SecondOrderForm from "components/inputs/secondOrderForm";
 import FeedIcon from '@mui/icons-material/Feed';
 import secondUseForm from "hooks/secondUseform";
+import { getApplication } from "action/applications";
 const steps = ["", "", "",""];
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
@@ -111,7 +112,7 @@ ColorlibStepIcon.propTypes = {
 
 const theme = createTheme();
 const fieldNum = 7
-const Checkout = ({ handleClose, createApplication,sendCode,verifyCode,code,user:{phone}  }) => {
+const Checkout = ({ handleClose, createApplication, getApplication,sendCode,verifyCode,code,user:{phone}  }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [validCode, setValidCode] = React.useState(false);
   const [fieldNum2,setFieldNum2] =  React.useState(5)
@@ -120,10 +121,11 @@ const Checkout = ({ handleClose, createApplication,sendCode,verifyCode,code,user
      handleClose();
      if(fieldNum2 == 7){
       createApplication(Object.assign(values,values2,{ "transportation_required": true}));
+      getApplication()
 
      }else{
       createApplication(Object.assign(values,values2,{ "transportation_required": false}));
-
+      getApplication()
      }
   };
   const getTransRequired = (e)=>{
@@ -274,6 +276,7 @@ const Checkout = ({ handleClose, createApplication,sendCode,verifyCode,code,user
 Checkout.propTypes = {
   handleClose: PropTypes.func,
   createApplication: PropTypes.func,
+  getApplication:PropTypes.func,
   sendCode: PropTypes.func,
   verifyCode: PropTypes.func,
   code: PropTypes.number,
@@ -282,4 +285,4 @@ const mapStateToProps = (state) => ({
   code: state.mobileCode.code,
   user: state.auth.user
 });
-export default connect(mapStateToProps, { createApplication,sendCode,verifyCode })(Checkout);
+export default connect(mapStateToProps, { createApplication,getApplication,sendCode,verifyCode })(Checkout);

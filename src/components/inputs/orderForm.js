@@ -29,7 +29,7 @@ const styles = () => ({
   },
 });
 const useStyles = makeStyles(styles);
-console.log(instance.baseURL)
+
 const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { nationalities } }) => {
   const classes = useStyles();
   const handleSlots = (time) => {

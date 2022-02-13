@@ -103,6 +103,7 @@ const PricingTable = ({
   };
   const handleTransWay = (e) => {
     setTransWayValue(e.target.value);
+    
     switch (e.target.value) {
       case "1":
         setTransWay("annual_fees");
@@ -117,6 +118,7 @@ const PricingTable = ({
         break;
     }
   };
+
   const handleTransPay = () => {
     const item = transportations.find((o) => o.id == transId);
 
@@ -275,7 +277,7 @@ const PricingTable = ({
                 <select
                   name="transportation_payment"
                   onChange={(e) => handleTransWay(e)}
-                  value={transWay}
+                  value={transWayValue}
                 >
                   <option value="0" disabled>
                     إختر الطريقة

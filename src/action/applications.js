@@ -43,7 +43,8 @@ export const createApplication = (body) => (dispatch) => {
     instance.post("/api/user/applications/new_application", body).then(
       (res) => {
         dispatch({ type: CREATE_APPLICATIONS, payload: body });
-        window.location.href = "/admin/student";
+        location.reload()
+        //window.location.href = "/admin/student";
         resolve(res);
       },
       (err) => {

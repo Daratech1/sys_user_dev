@@ -21,7 +21,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Box from "@material-ui/core/Box";
 import Checkbox from "@material-ui/core/Checkbox";
-import Hidden from "@material-ui/core/Hidden";
 import Link from "@material-ui/core/Link";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
@@ -149,19 +148,13 @@ const Register = ({ data: { nationalities, countries_id }, register }) => {
   const [formData, setFormData] = React.useState({
     first_name: "",
     last_name: "",
-    nationality_id: "",
-    country_id: "",
     phone: "",
-    email: "",
     password: "",
   });
 
   const {
     first_name,
     last_name,
-    email,
-    country_id,
-    nationality_id,
     phone,
     password,
   } = formData;
@@ -175,7 +168,7 @@ const Register = ({ data: { nationalities, countries_id }, register }) => {
     }
   };
   const onChangePhone = (e) => {
-     setFormData({...formData,"phone": formatPhoneNumber(e).replace(/\s/g, "")})
+     setFormData({...formData,"phone": formatPhoneNumberIntl(e)})
   };
   const checkPassword = (e)=>{
     setPasswordConfig(e.target.value)
@@ -190,26 +183,7 @@ const Register = ({ data: { nationalities, countries_id }, register }) => {
   const handleShowPass = () => {
     setShowPassword(!showPassword);
   };
-  const handleSelectNationality = () => {
-    return (
-      nationalities &&
-      nationalities.map(prop => (
-        <option key={prop.id} value={prop.id}>
-          {prop.nationality_name}
-        </option>
-      ))
-    );
-  };
-  const handleSelectCountries = () => {
-    return (
-      countries_id &&
-      countries_id.map(prop => (
-        <option key={prop.id} value={prop.id}>
-          {prop.country_name}
-        </option>
-      ))
-    );
-  };
+
   return (
     <Grid container style={{ alignItems: "center" }} className="handelDir">
       <Grid item xs={12} md={6} className={classes.container}  className="handel_pos"> 
@@ -246,43 +220,6 @@ const Register = ({ data: { nationalities, countries_id }, register }) => {
             </div>
           </div>
           <div className="row-box">
-            <div className="form-group">
-              <label> الجنسية </label>
-              <select
-                name="nationality_id"
-                value={nationality_id}
-                onChange={(e) => onChange(e)}
-              >
-                <option value="">إختر الجنسية</option>
-                {handleSelectNationality()}
-              </select>
-            </div>
-            <div className="form-group">
-              <label> دولة الإقامة </label>
-              <select
-                name="country_id"
-                value={country_id}
-                onChange={(e) => onChange(e)}
-              >
-                <option value="">إختر دولة الإقامة</option>
-                {handleSelectCountries()}
-              </select>
-            </div>
-          </div>
-          <div className="row-box">
-            <div className="form-group">
-              <label>البريد الإلكترونى </label>
-              <input
-                type="mail"
-                name="email"
-                value={email}
-                onChange={(e) => onChange(e)}
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder="البريد الالكترونى"
-              />
-            </div>
             <div className="form-group">
               <label>رقم الجوال </label>
               <PhoneInput

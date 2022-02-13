@@ -89,6 +89,7 @@ const SecondOrderForm = ({
     handleChange2(e);
   };
   const handleTransWay = (e) => {
+    setTransWayValue(e.target.value)
     switch (e.target.value) {
       case "1":
         setTransWay("annual_fees");
@@ -102,6 +103,7 @@ const SecondOrderForm = ({
       default:
         break;
     }
+    console.log(transWayValue)
     handleChange2(e);
   };
   const handleTransPay = () => {
