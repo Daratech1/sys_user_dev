@@ -33,6 +33,7 @@ import AbsenceChart from "views/Chart/calendarChart";
 import Payment from "views/Payment/Payment";
 import Paybook from "views/paybook/Paybook";
 import Permissions from "views/Permissions/Permissions";
+import ChangePassWord from "views/ChangePassWord/ChangePassWord";
 
 
 const dashboardRoutes = [
@@ -91,6 +92,14 @@ const dashboardRoutes = [
     rtlName: "",
     icon: LocalLibraryIcon,
     component: Profile,
+    layout: "/admin",
+  },
+  {
+    path: "/changepassword",
+    name: "ChangePassWord",
+    rtlName: "",
+    icon: LocalLibraryIcon,
+    component: ChangePassWord,
     layout: "/admin",
   },
   {

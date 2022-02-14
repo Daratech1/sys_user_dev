@@ -12,10 +12,11 @@ import { connect } from "react-redux";
 import Icon from "@material-ui/core/Icon";
 import PaymentIcon from "@material-ui/icons/Payment";
 import Button from "@material-ui/core/Button";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { getPaymentMethode } from "../../action/PaymentMethod";
-import { useLocation , useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import Payment from "../Payment/Payment";
+import Animations from "../LoadingComponent/LoadingComponent";
 // ======================================================
 
 const useStyles = makeStyles((theme) => ({
@@ -39,21 +40,23 @@ const useStyles = makeStyles((theme) => ({
 const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
   const classes = useStyles();
   let location = useLocation();
-  let history = useHistory()
-    const [myParam , setMyParam] = useState("")
-  const handelTransactionId = (e , eleValone , eleValtwo) => {
-    history.push(`/admin/payment/`, { transactionId: e , studentId:location.state.myParam } )
-    window.localStorage.setItem( "valueone" , eleValone )
-    window.localStorage.setItem( "valuetwo" , eleValtwo )
-  }
+  let history = useHistory();
+  const [myParam, setMyParam] = useState("");
+  const handelTransactionId = (e, eleValone, eleValtwo) => {
+    history.push(`/admin/payment/`, {
+      transactionId: e,
+      studentId: location.state.myParam,
+    });
+    window.localStorage.setItem("valueone", eleValone);
+    window.localStorage.setItem("valuetwo", eleValtwo);
+  };
 
   useEffect(() => {
-    setMyParam(location.state.myParam)
+    setMyParam(location.state.myParam);
     getPaymentMethode(location.state.myParam);
   }, [getPaymentMethode]);
   return (
     <div>
-      
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -80,9 +83,8 @@ const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {PaymentData.transactions &&
-            PaymentData.success === true ? (
-                PaymentData.transactions.map((ele) => (
+            {PaymentData.transactions && PaymentData.success === true ? (
+              PaymentData.transactions.map((ele) => (
                 <TableRow key={ele.id}>
                   <TableCell
                     component="th"
@@ -120,33 +122,65 @@ const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
                   </TableCell>
                   <TableCell className={classes.textStartBody}>
                     {ele.payment_status == "0" ? (
-                      
                       <Button
-                      id={ele.id}
+                        id={ele.id}
                         variant="contained"
                         color="primary"
                         className={classes.button}
                         endIcon={<PaymentIcon />}
-                        onClick ={(e) => handelTransactionId(ele.id , ele.amount_after_discount , ele.paid_amount)}
+                        onClick={(e) =>
+                          handelTransactionId(
+                            ele.id,
+                            ele.amount_after_discount,
+                            ele.paid_amount
+                          )
+                        }
                       >
                         <span style={{ margin: "0 5px" }}>ادفع</span>
                       </Button>
-                     
                     ) : (
                       "تم الدفع"
                     )}
                   </TableCell>
                 </TableRow>
               ))
-            ) : PaymentData.transactions === undefined ? (
-              <TableCell style={{padding:"50px" ,textAlign:"center" , width:"100%"}}> عفوا لايوجد سجل مدفوعات لهذا الطالب  ...</TableCell>
             ) : (
-                <TableCell style={{padding:"50px" ,textAlign:"center" , width:"100%"}}> أنتظر لجلب البيانات من فضلك ...</TableCell>
-            )
-              }
+              <>
+                <TableCell
+                  style={{
+                    padding: "50px",
+                    textAlign: "center",
+                    width: "100%",
+                    color: "green",
+                  }}
+                >
+                  {" "}
+                  أنتظر لجلب البيانات من فضلك ...
+                </TableCell>
+              </>
+            )}
+
+            {PaymentData.transactions &&
+            PaymentData.transactions.length === 0 ? (
+              <TableCell
+                style={{
+                  padding: "50px",
+                  textAlign: "center",
+                  width: "100%",
+                  color: "red",
+                }}
+              >
+                {" "}
+                عفوا لاتوجد بيانات للطالب/ه...
+              </TableCell>
+            ) : null}
           </TableBody>
         </Table>
       </TableContainer>
+
+      {!PaymentData.transactions && !PaymentData.success === true ? (
+        <Animations />
+      ) : null}
     </div>
   );
 };

@@ -36,6 +36,7 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useLocation } from "react-router-dom";
 import Coupon from "./Coupone";
+
 // ======================================================
 
 // start check radio
@@ -53,11 +54,6 @@ const GreenRadio = withStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
   },
   formCo: {
     width: "100%",
@@ -147,6 +143,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     border: "0",
+    maxHeight: "50px",
   },
   payforImg: {
     width: "100%",
@@ -252,6 +249,7 @@ const Payment = ({
   const [couponVal, setCouponVal] = useState("");
   // statrt posting data **************************************************
   const [open2, setOpen2] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClosePopUp = () => {
     setOpen2(false);
@@ -272,6 +270,8 @@ const Payment = ({
     setMethodId(e.target.id);
   };
   // *********************************
+
+  // start payfort method----------------------
   var formData = new FormData();
   const handelMethodIdClick = (e) => {
     formData.append("receipt", uploadVal);
@@ -286,6 +286,21 @@ const Payment = ({
     );
   };
 
+  const handleOpen = () => {
+    setOpen(true);
+    if (!transactionData.params) {
+      getTransactoinMethode(
+        location.state.studentId,
+        location.state.transactionId,
+        { method_id: 3, coupon: couponVal }
+      );
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handelMethodIdClickSchool = (e) => {
     getTransactoinMethode(
       location.state.studentId,
@@ -295,20 +310,24 @@ const Payment = ({
   };
 
   const handelMethodIdClickpayfort = (e) => {
-    getTransactoinMethode(
-      location.state.studentId,
-      location.state.transactionId,
-      { method_id: 3, coupon: couponVal }
-    );
-  };
+    if (transactionData.params) {
+      var form = document.createElement("form");
 
-  useEffect(() => {
-    getTransactoinMethode(
-      location.state.studentId,
-      location.state.transactionId,
-      { method_id: 3, coupon: couponVal }
-    );
-  }, [getTransactoinMethode]);
+      transactionData.params &&
+        Object.values(transactionData.params).forEach((element, i) => {
+          var inputs = document.createElement("input");
+          inputs.setAttribute("value", element);
+          inputs.setAttribute("name", Object.keys(transactionData.params)[i]);
+          form.appendChild(inputs);
+        });
+
+      form.method = "POST";
+      form.action = transactionData.url && transactionData.url;
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+  };
 
   const getcouopnvalue = (couponVal) => {
     setCouponVal(couponVal);
@@ -355,7 +374,7 @@ const Payment = ({
                   />
                 )}{" "}
                 {transactionData.success && transactionData.success === true
-                  ? transactionData.messages
+                  ? transactionData.message
                   : "حدث خطأ ما يرجي المحاوله"}{" "}
               </p>
             </div>
@@ -368,14 +387,9 @@ const Payment = ({
             طرق الدفع <AttachMoneyIcon />{" "}
           </h4>
 
-          <Grid xs={12} className={classes.form_padding}>
+          <Grid item xs={12} className={classes.form_padding}>
             <div className="flexing_items">
-              <Grid
-                xs={12}
-                md={4}
-                spacing={2}
-                className={classes.custom_border}
-              >
+              <Grid item xs={12} md={4} className={classes.custom_border}>
                 <div className="payment_methods col-md-6">
                   <div className="part_1">
                     <h4 style={{ marginTop: "0" }}>
@@ -492,11 +506,11 @@ const Payment = ({
                 </div>
               </Grid>
               <Grid
+                item
                 xs={12}
                 md={3}
-                spacing={2}
                 className={classes.custom_border}
-                style={{border:"0"}}
+                style={{ border: "0" }}
               >
                 <Coupon
                   studentId={location.state.studentId}
@@ -506,57 +520,68 @@ const Payment = ({
               </Grid>
               {/* start form part */}
               {checkForForm == "1" ? (
-                <Grid
-                  xs={12}
-                  md={4}
-                  spacing={2}
-                  className={classes.custom_border}
-                >
-                  {
-                    <form
-                      action={transactionData.url && transactionData.url}
-                      onSubmit={handelMethodIdClickpayfort}
-                      method="post"
+                <Grid item xs={12} md={4} className={classes.custom_border}>
+                  <Modal
+                    style={{ direction: "rtl" }}
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    onClose={handleClose}
+                    open={open}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                      timeout: 500,
+                    }}
+                  >
+                    <Fade in={open}>
+                      <div
+                        className={classes.paper}
+                        style={{
+                          width: "30%",
+                          display: "flex",
+                          flexFlow: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <h5 id="transition-modal-title">
+                          أضغط للأنتقال الي صفحه الدفع
+                        </h5>
+                        <button
+                          onClick={handelMethodIdClickpayfort}
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                          className={classes.bookBtn}
+                        >
+                          أدفع الأن
+                          <SendIcon />
+                        </button>
+                      </div>
+                    </Fade>
+                  </Modal>
+                  <Grid container md={12} xs={12}>
+                    <img
+                      src={wallet}
+                      alt={wallet}
+                      className={classes.payforImg}
+                    />
+                    <button
+                      onClick={handleOpen}
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className={classes.bookBtn}
                     >
-                      {transactionData.params &&
-                        Object.values(transactionData.params).map((ele, i) => {
-                          return (
-                            <input
-                              key={i}
-                              type="hidden"
-                              value={transactionData.params && ele}
-                              name={
-                                transactionData.params &&
-                                Object.keys(transactionData.params)[i]
-                              }
-                            />
-                          );
-                        })}
-
-                      <Grid item md={12} xs={12}>
-                        <img
-                          src={wallet}
-                          alt={wallet}
-                          className={classes.payforImg}
-                        />
-                        <div className={classes.pairBookBtn}>
-                          <button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className={classes.bookBtn}
-                          >
-                            أدفع الأن
-                            <SendIcon />
-                          </button>
-                        </div>
-                      </Grid>
-                    </form>
-                  }
+                      طلب دفع
+                      <SendIcon />
+                    </button>
+                  </Grid>
                 </Grid>
               ) : checkForForm === "3" ? (
                 <Grid
                   container
+                  item
                   xs={12}
                   md={4}
                   spacing={2}
@@ -585,7 +610,7 @@ const Payment = ({
                       component="label"
                       style={{ width: "100%" }}
                     >
-                      <form enctype="multipart/form-data">
+                      <form encType="multipart/form-data">
                         <input
                           hidden
                           id={1}
@@ -613,14 +638,15 @@ const Payment = ({
                 </Grid>
               ) : checkForForm === "2" ? (
                 <>
-                  <Grid
-                    xs={12}
-                    md={4}
-                    spacing={2}
-                    className={classes.custom_border}
-                  >
+                  <Grid item xs={12} md={4} className={classes.custom_border}>
                     <Grid container>
-                      <h5 style={{ padding: " 0 10px" }}>
+                      <h5
+                        style={{
+                          padding: " 0 10px",
+                          fontSize: "1em",
+                          marginTop: "10px",
+                        }}
+                      >
                         {" "}
                         برجاء التوجه الي المدرسه لدفع المصاريف.
                       </h5>
@@ -644,6 +670,7 @@ const Payment = ({
               ) : (
                 <Grid
                   container
+                  item
                   xs={12}
                   md={6}
                   spacing={2}
