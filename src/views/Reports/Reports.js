@@ -31,16 +31,15 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-import { getReportsShareMethode } from "../../action/reportsAction";
-import { getReportsAttandanceMethode } from "../../action/reportAttandanceAction";
+import { getReportsShareMethode , getReportsAttandanceMethode } from "../../action/reportsAction";
 import { getStudents } from "../../action/students";
 import { getApplication } from "../../action/applications";
 import { getStaticData } from "../../action/data";
 import { useHistory } from "react-router-dom";
-import Animations from "./LoadingComponent/LoadingComponent";
+import { xorBy } from "lodash";
+import Animations from "../LoadingComponent/LoadingComponent";
 import SimpleBackdrop from "./BackDrop/BackDrop";
 import moment from "moment";
-import { downloadPDF } from "components/PDF/generatePDF";
 const GreenRadio = withStyles({
   root: {
     color: green[400],
@@ -64,7 +63,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'} variant={'body2'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -138,6 +137,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "1px 1px 2px #aaa",
     fontSize: "14px",
   },
+  textCenters:{
+    textAlign:"center"
+  }
 }));
 
 // table
@@ -238,36 +240,14 @@ const Reports = ({
   const handelPDF = () => {
     const x = reportsData_ATTA.data;
     const y = reportsData_PER.data;
-  
     switch (valueSubTabs) {
       case 0:
-       // localStorage.setItem("reportData", JSON.stringify(x));
-       const z = x && x.report.map(({student_id,...rest})=> ({...rest}))
-
-        return(
-          (reportsData_ATTA.data && reportsData_ATTA.data.report.length > 0) ?
-          <Button
-          variant="contained"
-          color="primary"
-          onClick={() => downloadPDF(reportsData_ATTA.data,z,reportsData_ATTA.report_title)}
-        >
-          مشاهدة التقرير
-        </Button>
-        :<>/</>
-        )
+        localStorage.setItem("reportData", JSON.stringify(x));
+        break;
       case 1:
-        const h = y && y.report.map(({student_id,case_color,...rest})=> ({...rest}))
-        return(
-          (reportsData_PER.data && reportsData_PER.data.report.length > 0 ) ?
-          <Button
-          variant="contained"
-          color="primary"
-          onClick={() => downloadPDF(reportsData_PER.data,h,reportsData_PER.data.report_title)}
-        >
-          مشاهدة التقرير
-        </Button>
-        : <></>
-        )
+        localStorage.setItem("reportData", JSON.stringify(y));
+
+        break;
 
       default:
         break;
@@ -424,7 +404,7 @@ const Reports = ({
               />
             }
             label="تحديد تاريخ"
-            labelPlacement="Start"
+            labelPlacement="start"
             className={classes.radioStyle}
           />
 
@@ -440,7 +420,7 @@ const Reports = ({
               />
             }
             label="تحديد تاريخ بدايه ونهايه"
-            labelPlacement="Start"
+            labelPlacement="start"
             className={classes.radioStyle}
           />
         </div>
@@ -489,7 +469,7 @@ const Reports = ({
                 <MenuItem value="all">
                   <em>جمع الطلاب</em>
                 </MenuItem>
-                <ListSubheader>الطلاب المقيدين</ListSubheader>
+                {/* <ListSubheader value="all">الطلاب المقيدين</ListSubheader> */}
 
                 {students &&
                   students.map((ele, i) => {
@@ -501,8 +481,18 @@ const Reports = ({
                   })}
               </Select>
             </FormControl>
-           
-               {handelPDF()}
+            {reportsData_ATTA.data &&
+              reportsData_ATTA.data.report.length > 0 &&
+              reportsData_PER.data &&
+              reportsData_PER.data.report.length > 0 && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handelPDF()}
+                >
+                  مشاهدة التقرير
+                </Button>
+              )}
           </Grid>
         </MuiPickersUtilsProvider>
         {/* Tab1 Header End */}
@@ -546,7 +536,11 @@ const Reports = ({
                 </TableBody>
               </Table>
             ) : (
+              <div className={classes.textCenters}>
+              لاتوجد بيانات
               <Animations />
+              </div>
+              
             )}
           </TableContainer>
         </TabPanel>
@@ -628,7 +622,11 @@ const Reports = ({
                 </TableBody>
               </Table>
             ) : (
+              <div className={classes.textCenters}>
+              لاتوجد بيانات 
               <Animations />
+              </div>
+              
             )}
           </TableContainer>
         </TabPanel>
@@ -676,7 +674,7 @@ const Reports = ({
                 <MenuItem value="all">
                   <em>جمع الطلاب</em>
                 </MenuItem>
-                <ListSubheader>الطلاب المقيدين</ListSubheader>
+                {/* <ListSubheader value="all">الطلاب المقيدين</ListSubheader> */}
 
                 {students &&
                   students.map((ele, i) => {
@@ -688,7 +686,18 @@ const Reports = ({
                   })}
               </Select>
             </FormControl>
-            {handelPDF()}
+            {reportsData_ATTA.data &&
+              reportsData_ATTA.data.report.length > 0 &&
+              reportsData_PER.data &&
+              reportsData_PER.data.report.length > 0 && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handelPDF()}
+                >
+                  مشاهدة التقرير
+                </Button>
+              )}
           </Grid>
         </MuiPickersUtilsProvider>
         {/* Tab2 header End */}
@@ -732,7 +741,11 @@ const Reports = ({
                 </TableBody>
               </Table>
             ) : (
-              <Animations />
+              <div className={classes.textCenters}>
+                  لاتوجد بيانات
+                <Animations />
+              </div>
+              
             )}
           </TableContainer>
         </TabPanel>
@@ -814,7 +827,11 @@ const Reports = ({
                 </TableBody>
               </Table>
             ) : (
-              <Animations />
+              <div className={classes.textCenters}>
+                لاتوجد بيانات
+                <Animations />
+              </div>
+              
             )}
           </TableContainer>
         </TabPanel>

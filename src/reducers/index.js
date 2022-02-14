@@ -13,7 +13,8 @@ import transactionData from "./tansactionReduser"
 import couponData from "./CouponReduser"
 import reportsData_PER from "./reportsReduser";
 import reportsData_ATTA from "./reportattandance";
-import dateSlots from './dateSlots'
+import dateSlots from './dateSlots';
+import passwordData from "./changePasswordReduser";
 export default combineReducers({
     data,
     alert,
@@ -29,5 +30,6 @@ export default combineReducers({
     couponData,
     reportsData_PER,
     reportsData_ATTA,
-    dateSlots
+    dateSlots,
+    passwordData
 })

@@ -110,9 +110,9 @@ export default function AppTable(props) {
             >
               الدفع
             </MenuItem>
-            <MenuItem onClick={handleClose} className={classes.dropPayItem}>
+            {/* <MenuItem onClick={handleClose} className={classes.dropPayItem}>
               سجل المدفوعات
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               // name={prop.id}
               onClick={() => {
@@ -316,12 +316,12 @@ export default function AppTable(props) {
                         >
                           الدفع
                         </MenuItem>
-                        <MenuItem
+                        {/* <MenuItem
                           onClick={handleClose}
                           className={classes.dropPayItem}
                         >
                           سجل المدفوعات
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem
                           onClick={() => {
                             test();

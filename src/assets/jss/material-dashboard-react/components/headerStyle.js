@@ -137,9 +137,10 @@ const headerStyle = () => ({
     height: "35px",
     border: "1px solid #ddd",
     padding: "10px",
+    display: "none",
     alignItems: "center",
     justifyContent: "center",
-    "@media (max-width:767px)":{
+    "@media (max-width:991px)":{
       display: "flex",
     alignItems: "center",
     justifyContent: "center",

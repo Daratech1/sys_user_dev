@@ -80,10 +80,14 @@ const RTLNavbarLinks = ({ user, logout }) => {
   const goProfile = () => {
     history.push("/admin/profile");
   };
+  const handelChangePassword = () => {
+    history.push("/admin/changepassword");
+  }
   const handleLogout = () => {
     logout();
     history.push("/login");
   };
+  
   return (
     <div>
       <Button
@@ -198,11 +202,11 @@ const RTLNavbarLinks = ({ user, logout }) => {
           </MenuItem>
           <Divider />
 
-          <MenuItem className={classes.profileLink}>
+          <MenuItem onClick={handelChangePassword} className={classes.profileLink}>
             <ListItemIcon>
               <Settings fontSize="small" />
             </ListItemIcon>
-            الإعدادت
+            تغيير كلمه المرور
           </MenuItem>
           <MenuItem onClick={handleLogout} className={classes.profileLink}>
             <ListItemIcon>
