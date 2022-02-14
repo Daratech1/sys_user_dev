@@ -5,6 +5,7 @@ import {
   CREATE_APPLICATIONS,
   GET_PLANS,
   SEND_PLAN,
+  FAIL_APP,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -43,13 +44,15 @@ export const createApplication = (body) => (dispatch) => {
     instance.post("/api/user/applications/new_application", body).then(
       (res) => {
         dispatch({ type: CREATE_APPLICATIONS, payload: body });
-        location.reload()
+       // location.reload()
         //window.location.href = "/admin/student";
         resolve(res);
       },
       (err) => {
         const errors = err.response.data.errors;
-        // dispatch(setAlert(Object.values(errors),'error'))
+        const x =  'هناك خطأ .. من فضلك أعد المحاولة'
+        dispatch({ type: FAIL_APP, payload:x});
+
         reject(err);
       }
     );

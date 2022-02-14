@@ -1,9 +1,9 @@
-import { GET_APPLICATIONS,GET_PLANS,SEND_PLAN ,CREATE_APPLICATIONS } from "../action/types";
+import { GET_APPLICATIONS,GET_PLANS,SEND_PLAN ,CREATE_APPLICATIONS, FAIL_APP } from "../action/types";
 
 const initialState = {
   applications: [],
   plans:[],
-  msg:{},
+  msg:'',
   loading: true,
 };
 export default (state = initialState, action) => {
@@ -26,6 +26,12 @@ export default (state = initialState, action) => {
         applications:[payload,...state.applications],
         loading: false,
       };
+      case FAIL_APP:
+        return {
+          ...state,
+          msg:payload,
+          loading: false,
+        };
     case SEND_PLAN:
       return {
         ...state,

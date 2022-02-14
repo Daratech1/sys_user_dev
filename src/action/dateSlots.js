@@ -10,6 +10,7 @@ export const getDateSlots = (time) => (dispatch) => {
         resolve(res);
       },
       (err) => {
+        dispatch({ type: GET_SLOTS, payload: [] });
         reject(err);
       }
     );

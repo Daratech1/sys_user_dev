@@ -28,6 +28,7 @@ import SecondOrderForm from "components/inputs/secondOrderForm";
 import FeedIcon from '@mui/icons-material/Feed';
 import secondUseForm from "hooks/secondUseform";
 import { getApplication } from "action/applications";
+import GppBadIcon from '@mui/icons-material/GppBad';
 const steps = ["", "", "",""];
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
@@ -112,21 +113,14 @@ ColorlibStepIcon.propTypes = {
 
 const theme = createTheme();
 const fieldNum = 7
-const Checkout = ({ handleClose, createApplication, getApplication,sendCode,verifyCode,code,user:{phone}  }) => {
+const Checkout = ({ handleClose,msg, createApplication, getApplication,sendCode,verifyCode,code,user:{phone}  }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [validCode, setValidCode] = React.useState(false);
   const [fieldNum2,setFieldNum2] =  React.useState(5)
 
   const finishForm = () => {
      handleClose();
-     if(fieldNum2 == 7){
-      createApplication(Object.assign(values,values2,{ "transportation_required": true}));
-      getApplication()
-
-     }else{
-      createApplication(Object.assign(values,values2,{ "transportation_required": false}));
-      getApplication()
-     }
+     location.reload()
   };
   const getTransRequired = (e)=>{
     if(e){
@@ -157,9 +151,17 @@ const Checkout = ({ handleClose, createApplication, getApplication,sendCode,veri
     } else if (activeStep === 2) {
     setActiveStep(activeStep + 1);
     verifyCode();
+    if(fieldNum2 == 7){
+      createApplication(Object.assign(values,values2,{ "transportation_required": true}));
+      getApplication()
+
+     }else{
+      createApplication(Object.assign(values,values2,{ "transportation_required": false}));
+      getApplication()
+     }
   }
   };
-
+console.log(msg)
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
@@ -215,12 +217,19 @@ const Checkout = ({ handleClose, createApplication, getApplication,sendCode,veri
       case 3:
         return (
           <>
-            <div className="message-box">
+          
+         {msg ?  <div className="message-box">
+              <GppBadIcon  style={{color:"red"}} />
+              <Typography variant="h5" align="center">
+               {msg}
+              </Typography>
+            </div>: <div className="message-box">
               <CheckCircleIcon color="info" />
               <Typography variant="h5" align="center">
                 تم تقديم طلبك بنجاح
               </Typography>
-            </div>
+            </div>}
+           
           </>
         );
       default:
@@ -280,9 +289,11 @@ Checkout.propTypes = {
   sendCode: PropTypes.func,
   verifyCode: PropTypes.func,
   code: PropTypes.number,
+  msg: PropTypes.object
 };
 const mapStateToProps = (state) => ({
   code: state.mobileCode.code,
-  user: state.auth.user
+  user: state.auth.user,
+  msg : state.applications.msg
 });
 export default connect(mapStateToProps, { createApplication,getApplication,sendCode,verifyCode })(Checkout);
