@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { getCouponMethode } from "../../action/CouponAction";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import wallet from "assets/img/payment/wallet.svg";
+// import wallet from "assets/img/payment/wallet.svg";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+// import Snackbar from "@material-ui/core/Snackbar";
+// import IconButton from "@material-ui/core/IconButton";
+// import CloseIcon from "@material-ui/icons/Close";
+import SimpleBackdrop from "../BackDrop/BackDrop"
 const useStyles = makeStyles((theme) => ({
   flexPromo: {
     display: "flex",
@@ -79,6 +80,7 @@ const Coupon = ({
 }) => {
   const classes = useStyles();
   const [couponValue, setCouponValue] = useState("");
+  const [open , setOpen] = useState(false);
   const handelCouponChange = (e) => {
     setCouponValue(e.target.value);
   };
@@ -88,7 +90,11 @@ const Coupon = ({
     if (couponValue !== "") {
       getCouponMethode(studentId, transactionId, { coupon: couponValue });
       getcouopnvalue(couponValue)
-      document.getElementById("d-block").style.display = "block"
+      document.getElementById("d-block").style.display = "block";
+      setOpen(true);
+      setTimeout(() => {
+        setOpen(false)
+      } , 1500)
     }
     
   };
@@ -99,7 +105,7 @@ useEffect(() => {
 
   return (
     <>
-     
+     <SimpleBackdrop open={open} />
       
       <Grid
         item

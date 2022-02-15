@@ -38,7 +38,7 @@ import { getStaticData } from "../../action/data";
 import { useHistory } from "react-router-dom";
 import { xorBy } from "lodash";
 import Animations from "../LoadingComponent/LoadingComponent";
-import SimpleBackdrop from "./BackDrop/BackDrop";
+import SimpleBackdrop from "../BackDrop/BackDrop";
 import moment from "moment";
 const GreenRadio = withStyles({
   root: {

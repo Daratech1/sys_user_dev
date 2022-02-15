@@ -11,6 +11,8 @@ export const getTransactoinMethode = (studentId , tansctionId , data) => (dispat
         resolve(res);
       },
       (err) => {
+        dispatch({ type: TRANSACTION_METHOD, payload:err.response.data });
+
         reject(err);
       }
     );

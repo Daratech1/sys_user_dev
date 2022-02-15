@@ -36,7 +36,13 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useLocation } from "react-router-dom";
 import Coupon from "./Coupone";
-
+import { getStaticData } from "../../action/data";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import SimpleBackdrop from "../BackDrop/BackDrop"
 // ======================================================
 
 // start check radio
@@ -106,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     paddingTop: "10px",
     paddingBottom: "10px",
-    display: "flex",
+    // display: "flex",
     flexFlow: "column",
   },
   form_padding: {
@@ -183,6 +189,8 @@ const useStyles = makeStyles((theme) => ({
 const Payment = ({
   getTransactoinMethode,
   transactionData: { transactionData },
+  staticData,
+  getStaticData,
 }) => {
   let location = useLocation();
 
@@ -248,9 +256,9 @@ const Payment = ({
   const [uploadVal, setUploadVal] = useState(null);
   const [couponVal, setCouponVal] = useState("");
   // statrt posting data **************************************************
-  const [open2, setOpen2] = React.useState(true);
-  const [open, setOpen] = React.useState(false);
-
+  const [open2, setOpen2] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [openBackdrop , setOpenBackdrop] = useState(false)
   const handleClosePopUp = () => {
     setOpen2(false);
     window.location.href = window.location.href;
@@ -271,19 +279,33 @@ const Payment = ({
   };
   // *********************************
 
-  // start payfort method----------------------
+  // start bank method----------------------
+  const [state, setState] = useState("");
+  const [stateBank, setStateBank] = useState({});
+
+  const handleChange = (event) => {
+    setState(event.target.value);
+    setStateBank(staticData.banks[event.target.value]);
+  };
+  useEffect(() => {
+    getStaticData();
+  }, []);
+
   var formData = new FormData();
   const handelMethodIdClick = (e) => {
     formData.append("receipt", uploadVal);
-    formData.append("bank_id", methodId);
+    formData.append("bank_id", stateBank.id);
     formData.append("method_id", methodId);
     formData.append("coupon", couponVal);
-
+    setOpenBackdrop(true);
     getTransactoinMethode(
       location.state.studentId,
       location.state.transactionId,
       formData
     );
+      if(transactionData.success){
+        setOpenBackdrop(false);
+      }
   };
 
   const handleOpen = () => {
@@ -300,15 +322,20 @@ const Payment = ({
   const handleClose = () => {
     setOpen(false);
   };
-
+  // start school method----------------------
   const handelMethodIdClickSchool = (e) => {
+    setOpenBackdrop(true);
     getTransactoinMethode(
       location.state.studentId,
       location.state.transactionId,
       { method_id: 2, coupon: couponVal }
     );
+    if(transactionData.success){
+      setOpenBackdrop(false);
+    }
   };
 
+  // start payfort method----------------------
   const handelMethodIdClickpayfort = (e) => {
     if (transactionData.params) {
       var form = document.createElement("form");
@@ -332,14 +359,19 @@ const Payment = ({
   const getcouopnvalue = (couponVal) => {
     setCouponVal(couponVal);
   };
+
   return (
     <div>
+      <SimpleBackdrop open={openBackdrop} />
       <div>
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           className={classes.modal}
-          open={transactionData && transactionData.success === true && open2}
+          open={
+            (transactionData && transactionData.success === true) ||
+            (transactionData.success === false && open2)
+          }
           onClose={handleClosePopUp}
           closeAfterTransition
           BackdropComponent={Backdrop}
@@ -349,9 +381,8 @@ const Payment = ({
         >
           <Fade
             in={
-              transactionData.success &&
-              transactionData.success === true &&
-              open2
+              (transactionData && transactionData.success === true) ||
+              (transactionData.success === false && open2)
             }
           >
             <div className={classes.paper}>
@@ -364,7 +395,7 @@ const Payment = ({
                   fontSize: "18px",
                 }}
               >
-                {transactionData.success && transactionData.success === true ? (
+                {transactionData && transactionData.success === true ? (
                   <CheckCircleOutlineIcon
                     style={{ color: "green", width: "2em", height: "2em" }}
                   />
@@ -373,9 +404,9 @@ const Payment = ({
                     style={{ color: "red", width: "2em", height: "2em" }}
                   />
                 )}{" "}
-                {transactionData.success && transactionData.success === true
+                {transactionData && transactionData.success === true
                   ? transactionData.message
-                  : "حدث خطأ ما يرجي المحاوله"}{" "}
+                  : transactionData.messages}
               </p>
             </div>
           </Fade>
@@ -560,7 +591,7 @@ const Payment = ({
                       </div>
                     </Fade>
                   </Modal>
-                  <Grid container md={12} xs={12}>
+                  <Grid item container md={12} xs={12}>
                     <img
                       src={wallet}
                       alt={wallet}
@@ -587,6 +618,34 @@ const Payment = ({
                   spacing={2}
                   className={classes.custom_border}
                 >
+                  <FormControl
+                    className={classes.formControl}
+                    onChange={handleChange}
+                  >
+                    <InputLabel htmlFor="age-native-helper">بنك</InputLabel>
+                    <NativeSelect
+                      style={{ borderRadius: "7px" }}
+                      value={state.age}
+                      inputProps={{
+                        // name: 'age',
+                        id: "age-native-helper",
+                      }}
+                    >
+                      <option aria-label="None" value="" />
+                      {staticData.banks &&
+                        staticData.banks.map((ele, i) => {
+                          return (
+                            <option key={i} value={i}>
+                              {ele.bank_name}
+                            </option>
+                          );
+                        })}
+                    </NativeSelect>
+                    <FormHelperText style={{ textAlign: "right" }}>
+                      أختر أسم البنك
+                    </FormHelperText>
+                  </FormControl>
+
                   <Grid item md={12} xs={12} className="bank_title_text">
                     <span>
                       برجاء تحويل المبلغ المستحق الي رقم الحساب التالي
@@ -594,11 +653,18 @@ const Payment = ({
                     <div className="bank_name_box">
                       <p>
                         {" "}
-                        <span>اسم الحساب</span> : <span>حساب سعودي</span>{" "}
+                        <span>اسم الحساب</span> :{" "}
+                        <span>{stateBank && stateBank.account_name}</span>{" "}
                       </p>
                       <p>
                         {" "}
-                        <span>رقم الحساب</span> : <span>1122334455</span>{" "}
+                        <span>رقم الحساب</span> :{" "}
+                        <span>{stateBank && stateBank.account_number}</span>{" "}
+                      </p>
+                      <p>
+                        {" "}
+                        <span>رقم الأيبان</span> :{" "}
+                        <span>{stateBank && stateBank.account_iban}</span>{" "}
                       </p>
                     </div>
                   </Grid>
@@ -693,13 +759,18 @@ const Payment = ({
 
 Payment.propTypes = {
   getTransactoinMethode: PropTypes.func.isRequired,
+  getStaticData: PropTypes.func.isRequired,
   transactionData: PropTypes.object,
   date: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   transactionData: state.transactionData,
+  staticData: state.data.staticData,
   date: state.date,
 });
 
-export default connect(mapStateToProps, { getTransactoinMethode })(Payment);
+export default connect(mapStateToProps, {
+  getTransactoinMethode,
+  getStaticData,
+})(Payment);
