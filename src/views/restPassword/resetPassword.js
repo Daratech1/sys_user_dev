@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 import Box from "@material-ui/core/Box";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -16,12 +17,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import BgLogin from "../../assets/img/icons/logo.png";
-import GoogleIcon from "assets/img/social-icons/google.png";
-import FacebookIcon from "assets/img/social-icons/facebook.png";
-import TwiterIcon from "assets/img/social-icons/twiter.png";
-import VerfyCode from "components/inputs/veryficationInput";
 
-import { login, codeConfirm } from "action/auth";
+
+import { resetPassword } from "action/auth";
+import VerfyCode from "components/inputs/veryficationInput";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -146,7 +145,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column-reverse",
   },
   handel_pos: {
-    background: "#efeeee",
+    background:"#efeeee",
     height: "100vh",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -161,46 +160,89 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "150px",
     },
   },
+  helpText: {
+    textAlign: "right",
+    paddingRight: "5px",
+    color: "red",
+  },
 }));
 
-const Login = ({ login, code, codeConfirm, isAuthenticated }) => {
-  let history = useHistory();
+const ResetPassword = ({resetPassword,code }) => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [passwordConfig,setPasswordConfig] = React.useState('');
+  const [confirmPass,setConfirmPass] = React.useState(false);
+  const [disableBtn,setDisableBtn] = React.useState(true);
   const [validCode, setValidCode] = React.useState(false);
+
   const classes = useStyles();
   const [formData, setFormData] = React.useState({
     phone: "",
     password: "",
+    password_confirmation:"",
   });
-
   const { phone, password } = formData;
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = () => {
-    codeConfirm(formData);
+    resetPassword({"phone":phone});
   };
-  const handleConfirm = ()=>{
-    let codeVal = {
-      code:code
-    }
-    const data = {...formData,...codeVal}
-    login(data)
+  const codeVal = {
+    code:code
   }
+  
+  const handleConfirm = () => {
+    const data = {...formData,...codeVal}
+    resetPassword(data);
+    window.location.href = "/login";
+};
   const handleShowPass = () => {
     setShowPassword(!showPassword);
   };
-   if (isAuthenticated) {
-    history.push("/admin");
-   }
+  const checkPassword = (e)=>{
+    setPasswordConfig(e.target.value)
+    onChange(e)
+    if (e.target.value !== password) {
+      setConfirmPass(true)
+      setDisableBtn(true)
+    }else{
+      setConfirmPass(false)
+      setDisableBtn(false)
+    }
+  };
   const checkValidCode = (input) => {
     if (input == code) {
       setValidCode(true);
-    } else {
-      setValidCode(false);
+    }else{
+      setValidCode(false)
     }
   };
- 
+ const sendDataFinal =()=>{
+   if (code) {
+    return(
+          <Button
+            variant="contained"
+            disabled={!validCode}
+            className={classes.logIn}
+            color="primary"
+            onClick={handleConfirm}
+          >
+            تأكيد
+          </Button>
+    )
+   }else{
+     return(
+<Button
+            variant="contained"
+            disabled={disableBtn}
+            className={classes.logIn}
+            color="primary"
+            onClick={handleSubmit}
+          >
+            إرسال
+          </Button>
+     )
+   }
+ }
   return (
     <Grid
       container
@@ -210,7 +252,7 @@ const Login = ({ login, code, codeConfirm, isAuthenticated }) => {
         window.screen.availWidth <= 1024 ? classes.handelFlex : null)
       }
     >
-      <Grid
+       <Grid
         item
         xs={12}
         md={6}
@@ -305,147 +347,90 @@ const Login = ({ login, code, codeConfirm, isAuthenticated }) => {
         className={(classes.container, classes.handel_pos)}
       >
         <Typography align="center" variant="h4" style={{ margin: "2rem 0 " }}>
-          تسجيل الدخول
+           إنشاء كلمة مرور جديدة
         </Typography>
         <div className={classes.containerInput}>
-          {code ? (
-            <>
-            <VerfyCode checkValidCode={checkValidCode} phone={phone} />
+        {
+          code ? 
+          <>
+          <VerfyCode checkValidCode={checkValidCode} phone={phone}/>
+          
+          </> 
+          :
+          <>
+          
+          <div className="form-group">
+            <label>رقم الجوال </label>
+            <input
+              type="text"
+              name="phone"
+              value={phone}
+              onChange={(e) => onChange(e)}
+              className="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="رقم الجوال"
+            />
+          </div>
 
-             <Button
-                variant="contained"
-                disabled={!validCode}
-                className={classes.logIn}
-                color="primary"
-                onClick={handleConfirm}
-              >
-                تأكيد
-             </Button>
-            </>
-          ) : (
-            <>
-              <div className="form-group">
-                <label>رقم الجوال </label>
-                <input
-                  type="text"
-                  name="phone"
-                  value={phone}
-                  onChange={(e) => onChange(e)}
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  placeholder="رقم الجوال"
-                />
-              </div>
-
-              <div className="form-group">
-                <Button className={classes.shoPass} onClick={handleShowPass}>
-                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                </Button>
-                <label>كلمه المرور </label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={password}
-                  onChange={(e) => onChange(e)}
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  placeholder="كلمه المرور"
-                />
-              </div>
-
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                mb={4}
-              >
-                <Link href="/resetpassword">نسيت كلمه المرور</Link>
-
-                <Box display="flex" alignItems="center">
-                  <Typography variant="caption">
-                    تدكرني في المره القادمه
-                  </Typography>
-                  <Checkbox size="small" color="primary" />
-                </Box>
-              </Box>
-              <Button
-                variant="contained"
-                className={classes.logIn}
-                color="primary"
-                onClick={handleSubmit}
-              >
-                دخول
+          <div className="form-group">
+            <Button className={classes.shoPass} onClick={handleShowPass}>
+              {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+            </Button>
+            <label> كلمه المرور الجديدة </label>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={password}
+              onChange={(e) => onChange(e)}
+              className="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="كلمه المرور الجديدة"
+            />
+          </div>
+          <div className="form-group">
+              <Button className={classes.shoPass} onClick={handleShowPass}>
+                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
               </Button>
-              <Typography
-                align="center"
-                mt={1}
-                mb={3}
-                className={classes.registerText}
-              >
-                ليس لديك حساب سجل مستخدم جديد{" "}
-              </Typography>
-              <Button
-                onClick={() => history.push("/register")}
-                className={classes.registLink}
-              >
-                إنشاء حساب
-              </Button>
-              <Grid
-                container
-                alignItems="center"
-                display="flex"
-                justifyContent="center"
-              >
-                <Grid item sm={8} xs={12}>
-                  <Paper elevation={3}>
-                    <Typography align="center" className={classes.title}>
-                      اوالتسجيل بواسطه حساب التواصل الاجتماعي
-                    </Typography>
-                  </Paper>
-                </Grid>
-              </Grid>
-
-              <div
-                style={{
-                  display: "flex",
-                  margin: "2rem 0",
-                  justifyContent: "center",
-                }}
-              >
-                <Avatar
-                  alt="google"
-                  src={GoogleIcon}
-                  style={{ cursor: "pointer" }}
-                />
-                <Avatar
-                  className={classes.avatar}
-                  src={FacebookIcon}
-                  style={{ cursor: "pointer" }}
-                />
-                <Avatar
-                  alt="twitter"
-                  src={TwiterIcon}
-                  style={{ cursor: "pointer" }}
-                />
-              </div>
-            </>
-          )}
-        </div>
+              <label>تاكيد كلمة المرور </label>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password_confirmation"
+                value={passwordConfig}
+                onChange={(e) => checkPassword(e)}
+                className="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="تاكيد كلمة المرور"
+              />
+              {confirmPass && (
+                <FormHelperText
+                  id="component-helper-text"
+                  className={classes.helpText}
+                >
+                  كلمة المرور غير متطابقة
+                </FormHelperText>
+              )}
+            </div>
+        
+       
+          </>
+        }
+         { sendDataFinal()}
+         </div>
+       
       </Grid>
+      
+     
     </Grid>
   );
 };
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-  codeConfirm: PropTypes.func.isRequired,
-  code: PropTypes.object,
+ResetPassword.propTypes = {
+    resetPassword: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  code: state.auth.code,
+ code: state.auth.code
 });
 
-export default connect(mapStateToProps, { login, codeConfirm })(Login);
+export default connect(mapStateToProps, { resetPassword })(ResetPassword);

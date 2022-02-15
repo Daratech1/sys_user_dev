@@ -9,93 +9,10 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   CLEAR_PROFILE,
+  RESET_PASS,
+  CODE_CONFIRMATION
 } from "./types";
-// import setAuthToken from '../uitils/setAuthToken'
-// const baseUrl ='http://admin.getech-eg.com/public'
 
-// User loaded
-
-// Register user
-// export const register =({name,email,password})=>async dispatch=>{
-// const config = {
-//     headers:{
-//         'Content-Type':'application/json',
-//          'X-Custom-Header': 'XMLHttpRequest',
-//          credentials: 'include'
-//     }
-// }
-// const body =({name,email,password})
-// try {
-//     const res =await axios.post(`${baseUrl}/api/users`,body,config)
-//     dispatch({
-//         type:REGISTER_SUCCESS,
-//         payload:res.data
-//     })
-//     dispatch(loadUser())
-
-// } catch (err) {
-//     const errors = err.response.data.errors
-//     if (errors)
-//     {
-//         errors.forEach(error=> dispatch(setAlert(error.msg,'danger')))
-//     }
-//     dispatch({
-//         type:REGISTER_FAIL
-//     })
-// }
-// }
-
-// Login user
-// export const login =(body)=>async dispatch=>{
-//     const config = {
-//         headers:{
-//             'Content-Type':'application/json'
-//         }
-//     }
-//     try {
-//         axios
-//         .get(`${baseUrl}public/sanctum/csrf-cookie`)
-//         .then(() => {})
-//         .catch((error) => {
-//           console.log(error);
-//         });
-//         const res =await axios.post(`${baseUrl}/api/user/auth/login`,body,config)
-//         dispatch({
-//             type:LOGIN_SUCCESS,
-//             payload:res.data
-//         })
-//         dispatch(loadUser())
-//     } catch (err) {
-//          const errors = err.response.data.errors
-//          dispatch(setAlert(errors.phone,'error'))
-//         // if (errors) { }
-//         dispatch({
-//                 type:LOGIN_FAIL
-//             })
-//         // {
-//         //    // errors.forEach(error=> dispatch(setAlert(error,'danger')))
-//         // }
-//         // const errors = err.response.errors
-//         // if (errors)
-//         // dispatch(setAlert(errors.phone,'error'))
-//         // {
-//         //    // errors.forEach(error=> dispatch(setAlert(error,'danger')))
-//         // }
-//         // dispatch({
-//         //     type:LOGIN_FAIL
-//         // })
-//     }
-// }
-// Logout user & Clear profile
-
-//  export const logout =()=> dispatch=>{
-//      dispatch({
-//          type:CLEAR_PROFILE
-//      })
-//      dispatch({
-//          type:LOGOUT_SUCCESS
-//      })
-//  }
 
 export const loadUser =() => async dispatch=>{
   // if(localStorage.token) {
@@ -131,8 +48,7 @@ export const storeToken = (token) => {
   instance.defaults.headers.common.authorization = `Bearer ${token}`;
 };
 
-export const login = ({ phone, password }) => (dispatch) => {
-  const body = { phone, password };
+export const login = (body) => (dispatch) => {
   const promise = new Promise((resolve, reject) => {
     instance.get("/sanctum/csrf-cookie").then(
       (res) => {
@@ -161,7 +77,35 @@ export const login = ({ phone, password }) => (dispatch) => {
 
   return promise;
 };
+export const codeConfirm = ({ phone, password }) => (dispatch) => {
+  const body = { phone, password };
+  const promise = new Promise((resolve, reject) => {
+    instance.get("/sanctum/csrf-cookie").then(
+      (res) => {
+        resolve(res);
+      },
+      (err) => {
 
+        reject(err);
+      }
+    );
+    instance.post("/api/user/auth/login", body).then(
+      (res) => {
+         dispatch({ type: CODE_CONFIRMATION, payload: res.data.data });
+        resolve(res);
+      },
+      (err) => {
+        const errors = err.response.data.errors
+        dispatch({ type: LOGIN_FAIL});
+        dispatch(setAlert(Object.values(errors),'error'))
+        reject(err);
+
+      }
+    );
+  });
+
+  return promise;
+};
 export const logout = () => (dispatch) => {
   dispatch({
     type: CLEAR_PROFILE,
@@ -201,6 +145,27 @@ export const getProtectedAPI = () => (dispatch) => {
       },
       (err) => {
         reject(err);
+      }
+    );
+  });
+
+  return promise;
+};
+
+export const resetPassword = (body) => (dispatch) => {
+  const promise = new Promise((resolve, reject) => {
+   
+    instance.post("/api/user/auth/reset-password-send-code", body).then(
+      (res) => {
+         dispatch({ type: RESET_PASS, payload: res.data.data });
+        resolve(res);
+      },
+      (err) => {
+        // const errors = err.response.data.errors
+        // dispatch({ type: LOGIN_FAIL});
+        // dispatch(setAlert(Object.values(errors),'error'))
+        reject(err);
+
       }
     );
   });

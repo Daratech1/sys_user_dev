@@ -9,13 +9,7 @@ const VerfyCode = ({ checkValidCode,phone }) => {
   const [pinCode, setPinCode] = useState("");
   const [btnIsPressed, setBtnIsPressed] = useState(false);
 
-  // const checkPinCode = () => {
-  //   const isPinCodeValid = pinCode === CORRECT_PIN_CODE;
-
-  //   setBtnIsPressed(true);
-  //   setIsPinCodeValid(isPinCodeValid);
-  //   if (!isPinCodeValid) setPinCode("");
-  // };
+ 
 
   const handlePinChange = pinCode => {
     setPinCode(pinCode);

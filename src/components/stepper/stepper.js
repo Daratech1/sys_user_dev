@@ -133,7 +133,7 @@ const Checkout = ({ handleClose,msg, createApplication, getApplication,sendCode,
 
 
   const checkValidCode = (input) => {
-    if (input === code) {
+    if (input == code) {
       setValidCode(true);
     }else{
       setValidCode(false)
@@ -161,7 +161,6 @@ const Checkout = ({ handleClose,msg, createApplication, getApplication,sendCode,
      }
   }
   };
-console.log(msg)
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
