@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   flexPromo: {
     display: "flex",
     justifyContent: "space-between",
-    marginBottom:"15px"
+    marginBottom: "15px"
   },
   promoInput: {
     padding: "7px",
@@ -90,27 +90,27 @@ const Coupon = ({
       getcouopnvalue(couponValue)
       document.getElementById("d-block").style.display = "block"
     }
-    
+
   };
-  
-useEffect(() => {
-  getCouponMethode(studentId, transactionId,{coupon:couponValue});
-} , [studentId , transactionId])
+
+  useEffect(() => {
+    getCouponMethode(studentId, transactionId, { coupon: couponValue });
+  }, [studentId, transactionId])
 
   return (
     <>
-     
-      
+
+
       <Grid
         item
         md={12}
         xs={12}
-        style={{ padding: "0 10px", marginBottom: "15px", marginTop:"10px" }}
+        style={{ padding: "0 10px", marginBottom: "15px", marginTop: "10px" }}
       >
-        <span>المبلغ المستحق: </span>
+        <span>المبلغ الاساسي: </span>
 
         <span className={classes.storNumber}>
-          {couponData.data && couponData.data.amount_before_discount }
+          {couponData.data && couponData.data.amount_before_discount}
         </span>
         <span style={{ color: "gray" }}> ر.س </span>
       </Grid>
@@ -131,11 +131,9 @@ useEffect(() => {
         </Grid>
       ) : null}
 
-       
-
       {couponData.data !== undefined &&
-      couponData.data.coupon_discount &&
-      couponData.data.is_coupon_valid ? (
+        couponData.data.coupon_discount &&
+        couponData.data.is_coupon_valid ? (
         <Grid
           item
           md={12}
@@ -145,6 +143,54 @@ useEffect(() => {
           <span>خصم كوبون: </span>
           <span className={classes.storNumber2}>
             {couponData.data.coupon_discount}
+          </span>
+          <span style={{ color: "gray" }}> ر.س </span>
+        </Grid>
+      ) : null}
+
+{couponData.data !== undefined &&
+        couponData.data.old_discount  ? (
+        <Grid
+          item
+          md={12}
+          xs={12}
+          style={{ padding: "0 10px", marginBottom: "15px" }}
+        >
+          <span>خصم سابق: </span>
+          <span className={classes.storNumber2}>
+            {couponData.data.old_discount}
+          </span>
+          <span style={{ color: "gray" }}> ر.س </span>
+        </Grid>
+      ) : null}
+
+      {couponData.data !== undefined && couponData.data.vat_amount != 0 ? (
+        <Grid
+          item
+          md={12}
+          xs={12}
+          style={{ padding: "0 10px", marginBottom: "15px" }}
+        >
+          <span>الضرائب: </span>
+
+          <span className={classes.storNumber2}>
+            {couponData.data.vat_amount}
+          </span>
+          <span style={{ color: "gray" }}> ر.س </span>
+        </Grid>
+      ) : null}
+
+      {couponData.data !== undefined && couponData.data.paid_amount != 0 ? (
+        <Grid
+          item
+          md={12}
+          xs={12}
+          style={{ padding: "0 10px", marginBottom: "15px" }}
+        >
+          <span>مدفوع : </span>
+
+          <span className={classes.storNumber2}>
+            {couponData.data.paid_amount}
           </span>
           <span style={{ color: "gray" }}> ر.س </span>
         </Grid>
@@ -183,44 +229,43 @@ useEffect(() => {
             تطبيق
           </Button>
         </Grid>
-        <div style={{display:"none"}} id="d-block">
+        <div style={{ display: "none" }} id="d-block">
 
-        {couponData.data !== undefined && couponData.data.is_coupon_valid ? (
-          <div className={classes.massagePair}>
-            <p className={classes.massageTexst} style={{ color: "green" }}>
-              {couponData.data && couponData.data.message} {couponValue}
-            </p>
-          </div>
-        ) : couponData.data == undefined ? null : (
-          <div className={classes.massagePair}>
-            <p className={classes.massageTexst}>
-              {couponData.data && couponData.data.message}
-            </p>
-          </div>
-        )}
+          {couponData.data !== undefined && couponData.data.is_coupon_valid ? (
+            <div className={classes.massagePair}>
+              <p className={classes.massageTexst} style={{ color: "green" }}>
+                {couponData.data && couponData.data.message} {couponValue}
+              </p>
+            </div>
+          ) : couponData.data == undefined ? null : (
+            <div className={classes.massagePair}>
+              <p className={classes.massageTexst}>
+                {couponData.data && couponData.data.message}
+              </p>
+            </div>
+          )}
         </div>
 
         {couponData.data !== undefined &&
-        couponData.data.amount_after_discount &&
-        (
-            couponData.data.is_coupon_valid 
+          couponData.data.residual_amount 
+          ? (
+            <Grid
+              item
+              md={12}
+              xs={12}
+              style={{ padding: "0 10px", marginBottom: "15px" }}
+            >
+              <span> {
+            couponData.data.is_coupon_valid
             ||
-          couponData.data.period_discount != 0)
-           ? (
-          <Grid
-            item
-            md={12}
-            xs={12}
-            style={{ padding: "0 10px", marginBottom: "15px" }}
-          >
-            <span>المبلغ بعد الخصم: </span>
+            couponData.data.period_discount != 0 ? 'المبلغ بعد الخصم:' : 'المبلغ الاجمالي : ' } </span>
 
-            <span className={classes.storNumber2} style={{color:"#0ccf87"}}>
-              {couponData.data.amount_after_discount}
-            </span>
-            <span style={{ color: "gray" }}> ر.س </span>
-          </Grid>
-        ) : null}
+              <span className={classes.storNumber2} style={{ color: "#0ccf87" }}>
+                {couponData.data.residual_amount}
+              </span>
+              <span style={{ color: "gray" }}> ر.س </span>
+            </Grid>
+          ) : null}
       </form>
     </>
   );
@@ -236,5 +281,6 @@ const mapStateToProps = (state) => ({
   couponData: state.couponData,
   date: state.date,
 });
+
 
 export default connect(mapStateToProps, { getCouponMethode })(Coupon);

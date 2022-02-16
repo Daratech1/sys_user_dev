@@ -24,12 +24,12 @@ import GppGoodIcon from "@mui/icons-material/GppGood";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { getStudents } from "action/students";
-import { getApplication,getPlan,sendPlanInfo } from "action/applications";
+import { getApplication, getPlan, sendPlanInfo } from "action/applications";
 import StudentCallStepper from "components/stepper/studentCallStepper";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Typography from "@mui/material/Typography";
 import CardFooter from "components/Card/CardFooter";
-import {usePagination,usePagination1} from "components/pagniation/pagniation";
+import { usePagination, usePagination1 } from "components/pagniation/pagniation";
 import { Pagination } from "@mui/material";
 import PaginationItem from '@mui/material/PaginationItem';
 
@@ -92,54 +92,54 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(2, 4, 3),
     width: "70%",
-    maxHeight:"90vh",
-    overflow:"auto",
+    maxHeight: "90vh",
+    overflow: "auto",
     borderRadius: "20px",
     [theme.breakpoints.down("md")]: {
       width: "90%",
     },
-    "&::-webkit-scrollbar":{
-      width:" 0.2em"
+    "&::-webkit-scrollbar": {
+      width: " 0.2em"
     },
 
-    "&::-webkit-scrollbar-track":{
+    "&::-webkit-scrollbar-track": {
       boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)"
     },
 
-    "&::-webkit-scrollbar-thumb":{
+    "&::-webkit-scrollbar-thumb": {
       backgroundColor: "#312163",
       outline: "1px solid #00daad"
     }
   },
-  custom_head:{
-    "@media (max-width:650px)":{
-      display:"flex",
-      flexFlow:"column",
-      width:"100%"
+  custom_head: {
+    "@media (max-width:650px)": {
+      display: "flex",
+      flexFlow: "column",
+      width: "100%"
     }
   }
 });
 
 const useStyles = makeStyles(styles);
 
-const TableList = ( { getStudents,getPlan,sendPlanInfo, students: { students },getApplication,data:{transportations}, applications:{applications,plans,msg} }) => {
+const TableList = ({ getStudents, getPlan, sendPlanInfo, students: { students }, getApplication, data: { transportations }, applications: { applications, plans, msg } }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [permissionOpen, setPermissionOpen] = React.useState(false);
   const [studtentCallOpen, setStudentCallOpen] = React.useState(false);
   const [payOpen, setPayOpen] = React.useState(false);
-  const [appId,setAppId] = useState(1)
-  const [showMsg,setShowMsg] = useState(false)
+  const [appId, setAppId] = useState(1)
+  const [showMsg, setShowMsg] = useState(false)
   const [page, setPage] = useState(1);
   const [page1, setPage1] = useState(1);
 
   const PER_PAGE = 5;
 
   const count = Math.ceil(applications.length / PER_PAGE);
-  const {currentData,jump} = usePagination(applications, PER_PAGE);
+  const { currentData, jump } = usePagination(applications, PER_PAGE);
 
   const count1 = Math.ceil(students.length / PER_PAGE);
-  const {currentData1,jump1} = usePagination1(students, PER_PAGE);
+  const { currentData1, jump1 } = usePagination1(students, PER_PAGE);
 
   useEffect(() => {
     getStudents();
@@ -154,7 +154,7 @@ const TableList = ( { getStudents,getPlan,sendPlanInfo, students: { students },g
     setPage1(p);
     jump1(p);
   };
-  const handleShow = ()=>{
+  const handleShow = () => {
     setShowMsg(true)
   }
   const handleOpen = () => {
@@ -166,18 +166,18 @@ const TableList = ( { getStudents,getPlan,sendPlanInfo, students: { students },g
   const handleClose = useCallback(() => {
     setOpen(false);
   }, [open]);
-const handleOpenPermission=()=>{
-  setPermissionOpen(true)
-}
-const handleOpenCallStudent=()=>{
-  setStudentCallOpen(true)
-}
-const handleClosePermission = useCallback(() => {
-  setPermissionOpen(false);
-}, [permissionOpen]);
-const handleCloseCallStudent = useCallback(() => {
-  setStudentCallOpen(false);
-}, [studtentCallOpen]);
+  const handleOpenPermission = () => {
+    setPermissionOpen(true)
+  }
+  const handleOpenCallStudent = () => {
+    setStudentCallOpen(true)
+  }
+  const handleClosePermission = useCallback(() => {
+    setPermissionOpen(false);
+  }, [permissionOpen]);
+  const handleCloseCallStudent = useCallback(() => {
+    setStudentCallOpen(false);
+  }, [studtentCallOpen]);
   const getPlanItems = (id) => {
     getPlan(id)
     setAppId(id)
@@ -200,236 +200,235 @@ const handleCloseCallStudent = useCallback(() => {
   const params = new URLSearchParams(window.location.search)
   return (
     <>
-    <div className={classes.tables}>
-    <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={params.get('status') && open2}
-          onClose={handleClosePopUp}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          
-          <Fade in={params.get('status') &&  open2}>
-            <div className={classes.paper}>
-              <p
-                id="transition-modal-description"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "18px",
-                }}
-              >
-                {params.get('status') !== "00" ? 
-                <CheckCircleOutlineIcon
-                style={{ color: "green", width: "2em", height: "2em" }}
-              />
-                :
-                 
-                <HighlightOffIcon 
-                style={{ color: "red", width: "2em", height: "2em" }}
-                /> 
-                }
-                {" "}
-                {params.get('status') !== "00"  
-                  ? params.get('response_message')
-                  : params.get('error_msg')
-                  }{" "}
-              </p>
-            </div>
-          </Fade>
-        </Modal>
-      </div>
-      <GridContainer className={classes.tables}>
-        <div className={classes.custom_head}>
-          <Button
-            variant="contained"
-            className={classes.addButton}
-            startIcon={<AddCircleIcon />}
-            onClick={() => handleOpen()}
+      <div className={classes.tables}>
+        <div>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={params.get('status') && open2}
+            onClose={handleClosePopUp}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
           >
-            إضافة طلب
-          </Button>
-          <Button
-            variant="contained"
-            className={classes.addButton}
-            startIcon={<GppGoodIcon />}
-            onClick={() => handleOpenPermission()}
-          >
-            إستئذان طالب
-          </Button>
-          <Button
-            variant="contained"
-            className={classes.addButton}
-            startIcon={<DirectionsRunIcon />}
-            onClick={() => handleOpenCallStudent()}
-          >
-            نداء الطالبات
-          </Button>
-        </div>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card className={classes.cardTable}>
-            <CardHeader>
-              <h4 className={classes.cardTitleBlack}>الطلاب المقيدين</h4>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor="primary"
-                tableHead={[
-                  "الإسم",
-                  "الرقم",
-                  "القسم",
-                  "الفصل",
-                  "حالة الدفع",
-                  "",
-                  "",
-                ]}
-                tableData={currentData1()}
-                handleOpen={handlePayOpen}
-                handleOpenMeeting={handleOpenMeeting}
-              />
-            </CardBody>
-            <CardFooter>
-              <Pagination count={count1} color="secondary"   size="large" page={page1}  onChange={handleChangePag1}   renderItem={(item) => (
-             <PaginationItem
-            components={{ previous: ChevronRightIcon, next: ChevronLeftIcon }}
-            {...item}
-          />
-        )}/> 
-              </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
-      <GridContainer className={classes.tables}>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card className={classes.cardTable}>
-            <CardHeader>
-              <h4 className={classes.cardTitleBlack}> قائمة الانتظار</h4>
-            </CardHeader>
-            <CardBody className={classes.cardBodyR_padding}>
-              <AppTable
-                tableHeaderColor="primary"
-                tableHead={[
-                  "الإسم",
-                  "هوية الطالب",
-                  " النظام ",
-                  "النوع",
-                  "المرحلة",
-                  "الصف",
-                  "الحالة",
-                  "",
-                  "",
-                ]}
-                tableData={currentData()}
-                getId={getPlanItems}
-                handleOpenMeeting={handleOpenMeeting}
-                handleOpen={handlePayOpen}
-              />
-              <CardFooter>
-              <Pagination count={count} color="secondary"   size="large" page={page}  onChange={handleChangePag}   renderItem={(item) => (
-             <PaginationItem
-            components={{ previous: ChevronRightIcon, next: ChevronLeftIcon }}
-            {...item}
-          />
-        )}/> 
-              </CardFooter>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
-      <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={permissionOpen}
-          onClose={handleClosePermission}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={permissionOpen}>
-            <div className={classes.paper}>
-              <PermissionStepper handleClose={handleClosePermission}/>              
-            </div>
-          </Fade>
-        </Modal>
-      </div>
-      <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <div className={classes.paper}>
-              <StepperForm handleClose={handleClose} />
-            </div>
-          </Fade>
-        </Modal>
-      </div>
-      <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={studtentCallOpen}
-          onClose={handleCloseCallStudent}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={studtentCallOpen}>
-            <div className={classes.paper}>
-              <StudentCallStepper handleClose={handleCloseCallStudent}/>
-            </div>
-          </Fade>
-        </Modal>
-      </div>
-      <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={payOpen}
-          onClose={handlePayClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 1000,
-          }}
-        >
-          <Fade in={payOpen}>
-            <div className={showMsg ? classes.paper2 : classes.paper1}>
-              {showMsg ?  <div className="message-box">
-              <CheckCircleIcon color="info" />
-              <Typography variant="h5" align="center" style={{marginTop: "30px"}}>
-                {msg.message}
-              </Typography>
-            </div> :  <PricingTable plans={plans} applications={applications} transportations={transportations} sendPlanInfo={sendPlanInfo} appId={appId} handleShow={handleShow}/>}
 
-            </div>
-          </Fade>
-        </Modal>
+            <Fade in={params.get('status') && open2}>
+              <div className={classes.paper}>
+                <p
+                  id="transition-modal-description"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "18px",
+                  }}
+                >
+                  {params.get('status') !== "00" ?
+                    <CheckCircleOutlineIcon
+                      style={{ color: "green", width: "2em", height: "2em" }}
+                    />
+                    :
+
+                    <HighlightOffIcon
+                      style={{ color: "red", width: "2em", height: "2em" }}
+                    />
+                  }
+                  {" "}
+                  {params.get('status') !== "00"
+                    ? params.get('response_message')
+                    : params.get('error_msg')
+                  }{" "}
+                </p>
+              </div>
+            </Fade>
+          </Modal>
+        </div>
+        <GridContainer className={classes.tables}>
+          <div className={classes.custom_head}>
+            <Button
+              variant="contained"
+              className={classes.addButton}
+              startIcon={<AddCircleIcon />}
+              onClick={() => handleOpen()}
+            >
+              إضافة طلب
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.addButton}
+              startIcon={<GppGoodIcon />}
+              onClick={() => handleOpenPermission()}
+            >
+              إستئذان طالب
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.addButton}
+              startIcon={<DirectionsRunIcon />}
+              onClick={() => handleOpenCallStudent()}
+            >
+              نداء الطالبات
+            </Button>
+          </div>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card className={classes.cardTable}>
+              <CardHeader>
+                <h4 className={classes.cardTitleBlack}>الطلاب المقيدين</h4>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  tableHeaderColor="primary"
+                  tableHead={[
+                    "الإسم",
+                    "الهوية",
+                    "القسم",
+                    "الفصل",
+                    "",
+                    "",
+                  ]}
+                  tableData={currentData1()}
+                  handleOpen={handlePayOpen}
+                  handleOpenMeeting={handleOpenMeeting}
+                />
+              </CardBody>
+              <CardFooter>
+                <Pagination count={count1} color="secondary" size="large" page={page1} onChange={handleChangePag1} renderItem={(item) => (
+                  <PaginationItem
+                    components={{ previous: ChevronRightIcon, next: ChevronLeftIcon }}
+                    {...item}
+                  />
+                )} />
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+        <GridContainer className={classes.tables}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card className={classes.cardTable}>
+              <CardHeader>
+                <h4 className={classes.cardTitleBlack}> قائمة الانتظار</h4>
+              </CardHeader>
+              <CardBody className={classes.cardBodyR_padding}>
+                <AppTable
+                  tableHeaderColor="primary"
+                  tableHead={[
+                    "الإسم",
+                    "هوية الطالب",
+                    " النظام ",
+                    "النوع",
+                    "المرحلة",
+                    "الصف",
+                    "الحالة",
+                    "",
+                    "",
+                  ]}
+                  tableData={currentData()}
+                  getId={getPlanItems}
+                  handleOpenMeeting={handleOpenMeeting}
+                  handleOpen={handlePayOpen}
+                />
+                <CardFooter>
+                  <Pagination count={count} color="secondary" size="large" page={page} onChange={handleChangePag} renderItem={(item) => (
+                    <PaginationItem
+                      components={{ previous: ChevronRightIcon, next: ChevronLeftIcon }}
+                      {...item}
+                    />
+                  )} />
+                </CardFooter>
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+        <div>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={permissionOpen}
+            onClose={handleClosePermission}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={permissionOpen}>
+              <div className={classes.paper}>
+                <PermissionStepper handleClose={handleClosePermission} />
+              </div>
+            </Fade>
+          </Modal>
+        </div>
+        <div>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <div className={classes.paper}>
+                <StepperForm handleClose={handleClose} />
+              </div>
+            </Fade>
+          </Modal>
+        </div>
+        <div>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={studtentCallOpen}
+            onClose={handleCloseCallStudent}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={studtentCallOpen}>
+              <div className={classes.paper}>
+                <StudentCallStepper handleClose={handleCloseCallStudent} />
+              </div>
+            </Fade>
+          </Modal>
+        </div>
+        <div>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={payOpen}
+            onClose={handlePayClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 1000,
+            }}
+          >
+            <Fade in={payOpen}>
+              <div className={showMsg ? classes.paper2 : classes.paper1}>
+                {showMsg ? <div className="message-box">
+                  <CheckCircleIcon color="info" />
+                  <Typography variant="h5" align="center" style={{ marginTop: "30px" }}>
+                    {msg.message}
+                  </Typography>
+                </div> : <PricingTable plans={plans} applications={applications} transportations={transportations} sendPlanInfo={sendPlanInfo} appId={appId} handleShow={handleShow} />}
+
+              </div>
+            </Fade>
+          </Modal>
+        </div>
       </div>
-    </div>
     </>
   );
 };
@@ -437,12 +436,12 @@ const handleCloseCallStudent = useCallback(() => {
 TableList.propTypes = {
   getStudents: PropTypes.func.isRequired,
   getApplication: PropTypes.func.isRequired,
-  getPlan:PropTypes.func.isRequired,
-  sendPlanInfo:PropTypes.func.isRequired,
+  getPlan: PropTypes.func.isRequired,
+  sendPlanInfo: PropTypes.func.isRequired,
   students: PropTypes.object,
   applications: PropTypes.object,
-  data:PropTypes.object,
-  msg:PropTypes.object
+  data: PropTypes.object,
+  msg: PropTypes.object
 };
 const mapStateToProps = (state) => ({
   students: state.students,
@@ -450,6 +449,6 @@ const mapStateToProps = (state) => ({
   data: state.data.staticData,
 });
 
-export default connect(mapStateToProps, { getStudents, getApplication,getPlan,sendPlanInfo })(
+export default connect(mapStateToProps, { getStudents, getApplication, getPlan, sendPlanInfo })(
   TableList
 );

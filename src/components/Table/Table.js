@@ -93,10 +93,8 @@ export default function CustomTable(props) {
                     <span>{prop.student_name}</span>{" "}
                   </td>
                   <td>{prop.national_id}</td>
-                  <td>{prop.class_name}</td>
-                  <td>{prop.level_name}</td>
-
-                  <td>لم يتم</td>
+                  <td> {prop.grade_name} - {prop.level_name}</td>
+                  <td>{prop.class_name ? prop.class_name : 'غير محدد'}</td>
                   <td>
                     {prop.status != null ? (
                       <Button variant="contained" size="large" color="error">
@@ -166,7 +164,7 @@ export default function CustomTable(props) {
                       </Typography>
 
                       <Typography gutterBottom variant="body2" component="h2">
-                        الرقم:{" "}
+                        الهوية:{" "}
                         <span>
                           {" "}
                           <Typography

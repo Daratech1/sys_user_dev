@@ -103,7 +103,7 @@ const PricingTable = ({
   };
   const handleTransWay = (e) => {
     setTransWayValue(e.target.value);
-    
+
     switch (e.target.value) {
       case "1":
         setTransWay("annual_fees");
@@ -185,12 +185,16 @@ const PricingTable = ({
               <h4 className="title-item">{prop.plan_name} </h4>
               <ul>
                 <li>
-                  <span className="name">القيمة:</span>
+                  <span className="name">الرسوم :</span>
                   <span className="value"> {prop.ammount_before_discount}</span>
                 </li>
                 <li>
                   <span className="name"> عدد الاقساط:</span>
-                  <span className="value"> {prop.installments}</span>
+                  {prop.installments > 1 ?
+                    <span className="value"> {prop.installments} </span>
+                    :
+                    <span className="value"> دفعة واحدة</span>
+                  }
                 </li>
                 {prop.is_discounted && (
                   <>

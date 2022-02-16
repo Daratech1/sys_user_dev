@@ -188,7 +188,7 @@ const Register = ({ data: { nationalities, countries_id }, register }) => {
     <Grid container style={{ alignItems: "center" }} className="handelDir">
       <Grid item xs={12} md={6} className={classes.container}  className="handel_pos"> 
         <Typography align="center" variant="h4" style={{ margin: "2rem 0 " }}>
-          تسجيل ولي أمر جديد
+          تسجيل حساب جديد
         </Typography>
         <div className={classes.containerInput}>
           <div className="row-box">

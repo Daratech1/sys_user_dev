@@ -66,9 +66,14 @@ const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
                 القيمه الاساسيه
               </TableCell>
               <TableCell className={classes.textStartHead}>
-                نسبه الخصم
+                خصم الفترة
               </TableCell>
-              <TableCell className={classes.textStartHead}>المستحق</TableCell>
+              <TableCell className={classes.textStartHead}>
+                خصم قسيمة
+              </TableCell>
+              <TableCell className={classes.textStartHead}>بعد الخصم</TableCell>
+              <TableCell className={classes.textStartHead}>ضرائب</TableCell>
+              <TableCell className={classes.textStartHead}>الاجمالي</TableCell>
               <TableCell className={classes.textStartHead}>المدفوع</TableCell>
               <TableCell className={classes.textStartHead}>المتبقي</TableCell>
               <TableCell className={classes.textStartHead}>الحاله</TableCell>
@@ -98,17 +103,26 @@ const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
                   </TableCell>
                   <TableCell className={classes.textStartBody}>
                     {" "}
-                    ({ele.discount_rate}%) {ele.discount_amount}
+                    {ele.period_discount} ({ele.discount_rate}%)
+                  </TableCell>
+                  <TableCell className={classes.textStartBody}>
+                    {ele.coupon_discount}
                   </TableCell>
                   <TableCell className={classes.textStartBody}>
                     {ele.amount_after_discount}
                   </TableCell>
                   <TableCell className={classes.textStartBody}>
+                    {ele.vat_amount}
+                  </TableCell> 
+                  <TableCell className={classes.textStartBody}>
+                    {parseInt(ele.amount_after_discount) + parseInt(ele.vat_amount)}
+                  </TableCell> 
+                  <TableCell className={classes.textStartBody}>
                     {ele.paid_amount}
                   </TableCell>
 
                   <TableCell className={classes.textStartBody}>
-                    {ele.amount_after_discount - ele.paid_amount}
+                    {ele.residual_amount}
                   </TableCell>
                   <TableCell className={classes.textStartBody}>
                     {ele.payment_status == 0 ? "بنتظار الدفع" : "تم الدفع"}

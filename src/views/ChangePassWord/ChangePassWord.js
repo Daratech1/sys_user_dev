@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   pair_button: {
     width: "100%",
     display: "flex",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
   },
 
   pair_input: {
@@ -126,7 +126,7 @@ const ChangePassWord = ({
 
       <div className={classes.pair_button}>
         <Button variant="contained" color="primary" onClick={handelpassClcik}>
-          تأكيد كلمه المرور
+          تفيير  كلمه المرور
         </Button>
       </div>
     </div>

@@ -30,12 +30,20 @@ export default (state = initialState, action) => {
           user: payload.userData
       }
     case REGISTER_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: false,
+        loading: false,
+        user: {},
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
         loading: false,
         user: payload.userData,
+        code:"",
+        code_is_valid:false
       };
       case RESET_PASS:
       case CODE_CONFIRMATION: 
