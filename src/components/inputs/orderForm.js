@@ -64,7 +64,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
         <Grid container spacing={1}>
           <Grid item xs={6} sm={6}>
             <div className="form-group">
-              <label> اسم الطالب فقط</label>
+              <label> اسم الطالب رباعي</label>
               <input
                 type="text"
                 name="student_name"
@@ -72,7 +72,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
                 className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
-                placeholder="اسم الطالب فقط"
+                placeholder="اسم الطالب رباعي"
               />
               {errors.student_name && (
                 <small className="error-input">{errors.student_name}</small>
