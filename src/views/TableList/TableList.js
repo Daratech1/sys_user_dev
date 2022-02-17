@@ -78,6 +78,12 @@ const styles = (theme) => ({
     [theme.breakpoints.down("1g")]: {
       width: "80%",
     },
+    "@media (max-width:768px)":{
+      width:"100%",
+      maxHeight:"90vh",
+      overflow:"auto",
+      padding:"10px"
+    }
   },
   paper2: {
     backgroundColor: theme.palette.background.paper,

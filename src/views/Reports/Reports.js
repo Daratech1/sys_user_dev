@@ -106,6 +106,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row-reverse",
     gap: "10px",
     alignItems: "center",
+    "@media (max-width:768px)":{
+      flexFlow:"column"
+    }
   },
   formControl: {
     margin: theme.spacing(1),
@@ -118,6 +121,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "7px",
     boxShadow: "1px 1px 2px #aaa",
     marginBottom: "5px",
+    "@media (max-width:768px)":{
+      flexFlow:"column",
+      padding:"0 10px"
+    }
   },
   width_c: {
     width: "200px",

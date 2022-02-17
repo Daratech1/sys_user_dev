@@ -16,6 +16,9 @@ const styles = (theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    "@media (max-width:768px)":{
+      flexFlow:"column"
+    }
   },
   addButton: {
     direction: "ltr",
@@ -36,6 +39,11 @@ const styles = (theme) => ({
       },
     },
   },
+  customFont:{
+    "@media (max-width:768px)":{
+      fontSize:"1.5rem"
+    }
+  }
 });
 
 
@@ -83,7 +91,7 @@ const AbsenceChart = ({
   return (
     <div className="chart-box">
       <div className={classes.headerBox}>
-        <h2>
+        <h2 className={classes.customFont}>
           جدول حضور الطالب
         </h2>
         <Button
