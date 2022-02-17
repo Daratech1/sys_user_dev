@@ -38,6 +38,9 @@ const styles = (theme) => ({
       borderRadius:"10px"
     }
   },
+  margin_bottom:{
+    marginBottom:"10px"
+  }
 });
 const useStyles = makeStyles(styles);
 
@@ -105,7 +108,7 @@ const PermissionForm = ({ students: { students }, errors, handleChange }) => {
         </Grid>
 
         <Grid container spacing={1}>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={6} sm={6} className={classes.margin_bottom}>
             <div className="form-group">
               <label> الطالب</label>
               <select name="student_id" onChange={(e) => handleChange(e)}>
@@ -122,7 +125,7 @@ const PermissionForm = ({ students: { students }, errors, handleChange }) => {
               )}
             </div>
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={6} sm={6} className={classes.margin_bottom}>
             <div className="form-group custom-input">
               <label>وقت الاستئذان</label>
              <form className={classes.container} noValidate>
@@ -143,7 +146,7 @@ const PermissionForm = ({ students: { students }, errors, handleChange }) => {
               )}
             </div>
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={12} sm={6} className={classes.margin_bottom}>
             <FormControl
               component="fieldset"
               className={classes.radioContainer}
@@ -181,7 +184,7 @@ const PermissionForm = ({ students: { students }, errors, handleChange }) => {
               </div>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} className={classes.margin_bottom}>
             <FormControl
               component="fieldset"
               className={classes.radioContainer}

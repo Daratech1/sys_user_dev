@@ -27,6 +27,9 @@ const styles = () => ({
   formBox: {
     direction: "rtl",
   },
+  margin_bottom:{
+    marginBottom:"10px !important"
+  }
 });
 const useStyles = makeStyles(styles);
 
@@ -146,7 +149,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
           <Grid item xs={12} sm={12}>
             <hr />
           </Grid>
-          <Grid item xs={4} sm={4}>
+          <Grid item xs={12} sm={4} className={classes.margin_bottom}>
             <div className="form-group">
               <label>تحديد يوم المقابلة </label>
               <input
@@ -163,7 +166,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
               )}
             </div>
           </Grid>
-          <Grid item xs={4} sm={4}>
+          <Grid item xs={12} sm={4}  className={classes.margin_bottom}>
             <div className="form-group">
               <label>تحديد التوقيت بالساعة </label>
               <select name="selected_time" onChange={(e) => handleChange(e)}>
@@ -184,7 +187,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
               )}
             </div>
           </Grid>
-          <Grid item xs={4} sm={4}>
+          <Grid item xs={12} sm={4}  className={classes.margin_bottom}>
             <FormControl
               component="fieldset"
               className={classes.radioContainer}

@@ -14,6 +14,12 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { loadUser } from "action/auth";
 
 const styles = {
+  children:{
+    padding: "0 3rem",
+    "@media (max-width:768px)":{
+      padding:"0"
+    }
+  },
   title: {
     color: "#322263 ",
     padding: "1rem 0 1rem 0",
@@ -58,7 +64,7 @@ const MyChildren = ({user:{guardian},loadUser}) => {
   },[])
 
   return (
-    <Container maxWidth="lg" style={{ padding: "0 3rem" }}>
+    <Container maxWidth="lg" className={classes.children} >
       <Typography variant="h4" className={classes.title}>
         الأبناء
       </Typography>
@@ -66,7 +72,7 @@ const MyChildren = ({user:{guardian},loadUser}) => {
       {
         guardian.students && guardian.students.map(stud =>
        
-          <Grid item sm={4} key={stud.id}>
+          <Grid item sm={4} xs={12} key={stud.id}>
           <Paper className={classes.container} onClick={()=>history.push(`/admin/childInfo/${stud.id}`)}>
             <Box display="flex">
               <Box>
