@@ -185,7 +185,7 @@ const PricingTable = ({
               <h4 className="title-item">{prop.plan_name} </h4>
               <ul>
                 <li>
-                  {/* test */}
+                  {/* test test 2 */}
                   <span className="name">الرسوم :</span>
                   <span className="value"> {prop.ammount_before_discount}</span>
                 </li>
