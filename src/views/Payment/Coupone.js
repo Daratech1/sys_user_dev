@@ -13,6 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 const useStyles = makeStyles((theme) => ({
   flexPromo: {
     display: "flex",
+    justifyContent: "space-between",
     marginBottom: "15px"
   },
   promoInput: {
