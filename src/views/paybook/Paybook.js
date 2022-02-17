@@ -193,7 +193,10 @@ const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
       </TableContainer>
 
       {!PaymentData.transactions && !PaymentData.success === true ? (
-        <Animations />
+        <div style={{background:"#fff",padding:"10px",boxShadow:"1px 1px 2px #888"}}>
+          <Animations />
+        </div>
+        
       ) : null}
     </div>
   );

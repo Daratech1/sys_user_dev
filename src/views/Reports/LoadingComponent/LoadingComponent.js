@@ -4,7 +4,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 export default function Animations() {
   return (
-    <Box style={{textAlign:"center"}}>
+    <Box style={{textAlign:"center"}} >
         لايوجد بيانات
       <Skeleton />
       <Skeleton animation="wave" />
