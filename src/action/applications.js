@@ -50,8 +50,10 @@ export const createApplication = (body) => (dispatch) => {
       },
       (err) => {
         const errors = err.response.data.errors;
-        const x =  'هناك خطأ .. من فضلك أعد المحاولة'
-        dispatch({ type: FAIL_APP, payload:x});
+        let errorBox = Object.values(errors)
+        let merged = [].concat.apply([], errorBox);
+
+        dispatch({ type: FAIL_APP, payload:merged});
 
         reject(err);
       }
