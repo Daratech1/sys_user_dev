@@ -119,6 +119,8 @@ const Checkout = ({ handleClose,msg,loading, createApplication, getApplication,s
   const [activeStep, setActiveStep] = React.useState(0);
   const [validCode, setValidCode] = React.useState(false);
   const [fieldNum2,setFieldNum2] =  React.useState(5)
+  const [firstForm,setFirstForm] = React.useState()
+  const [secondForm,setSecondForm] = React.useState()
 
   const finishForm = () => {
     getApplication()
@@ -145,9 +147,11 @@ const Checkout = ({ handleClose,msg,loading, createApplication, getApplication,s
   const handleNext = () => {
     if (activeStep === 0) {
       handleSubmit();
+      setFirstForm(values)
       setActiveStep(activeStep + 1);
     } else if (activeStep === 1) {
       handleSubmit2();
+      setSecondForm(values2)
       setActiveStep(activeStep + 1);
       sendCode();
     } else if (activeStep === 2) {
@@ -203,13 +207,12 @@ const Checkout = ({ handleClose,msg,loading, createApplication, getApplication,s
     }
     
 };
-console.log(msg)
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <OrderForm errors={errors} handleChange={handleChange} />;
+        return <OrderForm initialVal={firstForm} errors={errors} handleChange={handleChange} />;
       case 1:
-        return <SecondOrderForm errors2={errors2} getTransRequired={getTransRequired} handleChange2={handleChange2} />;
+        return <SecondOrderForm initialVal={secondForm} errors2={errors2} getTransRequired={getTransRequired} handleChange2={handleChange2} />;
       case 2:
         return (
           <>

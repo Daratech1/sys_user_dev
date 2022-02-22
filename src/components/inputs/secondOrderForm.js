@@ -32,6 +32,7 @@ const useStyles = makeStyles(styles);
 const SecondOrderForm = ({
   getTransRequired,
   errors2,
+  initialVal,
   handleChange2,
   data: { transportations,types,genders,grades,levels },
 }) => {
@@ -131,7 +132,7 @@ const SecondOrderForm = ({
               <Grid item xs={6} sm={3}>
                 <div className="form-group">
                   <label>مسار التعليم </label>
-                  <select name="type_id" onChange={(e) => handleSelectType(e)}>
+                  <select name="type_id" onChange={(e) => handleSelectType(e)}   value={initialVal?.type_id}>
                     <option value="">إخترالمسار</option>
                     {types.map((opt) => (
                       <option key={opt.id} value={opt.id}>
@@ -154,6 +155,7 @@ const SecondOrderForm = ({
                 <select
                   name="gender_id"
                   onChange={(e) => handleSelectGender(e)}
+                  value={initialVal?.gender_id}
                 >
                   <option value="">إختر النوع</option>
 
@@ -173,7 +175,7 @@ const SecondOrderForm = ({
             <Grid item xs={6} sm={3}>
               <div className="form-group">
                 <label>القسم </label>
-                <select name="grade_id" onChange={(e) => handleSelectGrades(e)}>
+                <select name="grade_id" onChange={(e) => handleSelectGrades(e)}   value={initialVal?.grade_id}>
                   <option value="">إختر القسم</option>
 
                   {customGrades.map((opt) => (
@@ -192,7 +194,7 @@ const SecondOrderForm = ({
             <Grid item xs={6} sm={3}>
               <div className="form-group">
                 <label>المرحلة </label>
-                <select name="level_id" onChange={(e) => handleChange2(e)}>
+                <select name="level_id" onChange={(e) => handleChange2(e)}   value={initialVal?.level_id}>
                   <option value="">إختر المرحلة</option>
 
                   {customLevels.map((opt) => (
@@ -219,7 +221,7 @@ const SecondOrderForm = ({
               <FormLabel className={classes.labelText} component="legend">
                 هل يحتاج الطالب الى رعاية
               </FormLabel>
-              <RadioGroup row aria-label="gender" name="student_care">
+              <RadioGroup row aria-label="gender" name="student_care" value={initialVal?.student_care}>
                 <FormControlLabel
                   value="1"
                   control={<Radio color="info" />}
@@ -240,7 +242,7 @@ const SecondOrderForm = ({
             <div className="form-group">
               <label> نظام السداد </label>
 
-              <select name="plan_id" onChange={(e) => handleChange2(e)}>
+              <select name="plan_id" onChange={(e) => handleChange2(e)}   value={initialVal?.plan_id}>
                 <option value="">إختر نظام السداد </option>
                 <option value="1">سنة دراسية كاملة</option>
                 <option value="2"> سداد جزئى</option>
@@ -261,6 +263,7 @@ const SecondOrderForm = ({
                   checked={transportation}
                   onChange={(e) => handleTransRequired(e)}
                   name="transportation_required"
+                  value={initialVal?.transportation_required}
                   sx={{
                     color: "#2A2666",
                     "&.Mui-checked": {
@@ -281,7 +284,7 @@ const SecondOrderForm = ({
                   <select
                     name="transportation_id"
                     onChange={(e) => handleTransType(e)}
-                    value={transId}
+                    value={initialVal?.transportation_id || transId }
                   >
                     <option value="0" disabled>
                       إختر الخدمة
@@ -301,7 +304,9 @@ const SecondOrderForm = ({
                   <select
                     name="transportation_payment"
                     onChange={(e) => handleTransWay(e)}
-                    value={transWayValue}
+                    value={initialVal?.transportation_payment || transWayValue }
+
+                    
                   >
                     <option value="0" disabled>
                       إختر الطريقة
