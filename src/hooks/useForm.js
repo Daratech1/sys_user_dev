@@ -20,7 +20,10 @@ const useForm = (num) => {
             ...errors,
             student_name: "يجب إدخال إسم الطالب",
           });
-        } else {
+         
+        }
+        
+        else {
           // set the error state empty or remove the error for student_name input
 
           //omit function removes/omits the value from given object and returns a new object
@@ -47,16 +50,22 @@ const useForm = (num) => {
       case "national_id":
         if (value === "") {
           // we will set the error state
-
           setErrors({
             ...errors,
             national_id: "يجب إدخال هوية الطالب",
           });
         }
+       
         else if(value.length > 10){
           setErrors({
             ...errors,
             national_id: "يجب أن يكون رقم الهوية مكون من عشرة أرقام  ",
+          });
+        }
+        else if( value.match(/^[0-9]+$/) === null){
+          setErrors({
+            ...errors,
+            national_id: "يجب أن يكون أرقام فقط" 
           });
         }
         else if(  value.length < 10){
@@ -92,12 +101,21 @@ const useForm = (num) => {
       case "birth_date":
         if (value === "") {
           // we will set the error state
-
+         
           setErrors({
             ...errors,
             birth_date: "يجب إدخال تاريخ الميلاد ",
           });
-        } else {
+        }
+        if (checkDate(value)) {
+          // we will set the error state
+        
+          setErrors({
+            ...errors,
+            birth_date: "يجب إدخال تاريخ الميلاد قبل 4 سنوات ",
+          });
+        }
+         else {
           // set the error state empty or remove the error for student_name input
 
           //omit function removes/omits the value from given object and returns a new object
@@ -361,5 +379,15 @@ const useForm = (num) => {
     disableBtn,
   };
 };
-
+function checkDate(val) {
+  var d = new Date();
+  d.setFullYear(d.getFullYear() + 4);
+  var current = new Date(val).getTime()
+  if (d > current) {
+   return true
+  } else {
+    return false
+  }
+   
+}
 export default useForm;
