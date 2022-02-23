@@ -22,6 +22,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import Micon from "assets/img/boy.jpg";
+import Ficon from "assets/img/girl.jpg";
 
 // core components
 import styles from "assets/jss/material-dashboard-react/components/tableStyle.js";
@@ -77,16 +79,16 @@ export default function CustomTable(props) {
               return (
                 <tr key={prop.id}>
                   <td className="table-avatar">
-                    {prop.gender_id === "1" ? (
+                    {prop.gender === '1' ? (
                       <Avatar
-                        alt="Remy Sharp"
-                        src="https://image.flaticon.com/icons/png/512/190/190600.png"
+                        alt={prop.student_name}
+                        src={Micon}
                         className={classes.large}
                       />
                     ) : (
                       <Avatar
-                        alt=""
-                        src="https://media.istockphoto.com/vectors/european-in-hijab-vector-illustration-a-fairskinned-muslim-woman-vector-id1211606262?k=20&m=1211606262&s=612x612&w=0&h=cNHeekspjhRupOGa2uylejnznaq8huJobb0uYoeSop0="
+                        alt={prop.student_name}
+                        src={Ficon}
                         className={classes.large}
                       />
                     )}

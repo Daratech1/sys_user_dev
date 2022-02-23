@@ -33,14 +33,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "20px",
     textAlign: "center",
     padding: "20px 0",
-    textShadow: "-1px 1px 1px #aaa",
   },
   storNumber2: {
     color: "#999",
     fontSize: "20px",
     textAlign: "center",
     padding: "20px 0",
-    textShadow: "-1px 1px 1px #aaa",
   },
   modal: {
     display: "flex",
