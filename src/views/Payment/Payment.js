@@ -37,13 +37,15 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useLocation } from "react-router-dom";
 import Coupon from "./Coupone";
 import { getStaticData } from "../../action/data";
+import { getStudents } from "../../action/students";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
-import SimpleBackdrop from "../Reports/BackDrop/BackDrop"
-// sssss
+import SimpleBackdrop from "../Reports/BackDrop/BackDrop";
+
+// sssss test
 // ======================================================
 
 // start check radio
@@ -185,10 +187,21 @@ const useStyles = makeStyles((theme) => ({
       width: "80%",
     },
   },
+  pair_student_name: {
+    background: "#fff",
+    borderBottom: "1px solid #ddd",
+    padding: "20px",
+  },
+  name: {
+    color: "#a3a3a3",
+    fontSize: "15px",
+  },
 }));
 
 const Payment = ({
   getTransactoinMethode,
+  getStudents,
+  students: { students },
   transactionData: { transactionData },
   staticData,
   getStaticData,
@@ -259,7 +272,7 @@ const Payment = ({
   // statrt posting data **************************************************
   const [open2, setOpen2] = useState(true);
   const [open, setOpen] = useState(false);
-  const [openBackdrop , setOpenBackdrop] = useState(false)
+  const [openBackdrop, setOpenBackdrop] = useState(false);
   const handleClosePopUp = () => {
     setOpen2(false);
     window.location.href = window.location.href;
@@ -304,9 +317,9 @@ const Payment = ({
       location.state.transactionId,
       formData
     );
-      if(transactionData.success){
-        setOpenBackdrop(false);
-      }
+    if (transactionData.success) {
+      setOpenBackdrop(false);
+    }
   };
 
   const handleOpen = () => {
@@ -331,7 +344,7 @@ const Payment = ({
       location.state.transactionId,
       { method_id: 2, coupon: couponVal }
     );
-    if(transactionData.success){
+    if (transactionData.success) {
       setOpenBackdrop(false);
     }
   };
@@ -360,6 +373,18 @@ const Payment = ({
   const getcouopnvalue = (couponVal) => {
     setCouponVal(couponVal);
   };
+
+  const [val, setVal] = useState(null);
+  useEffect(
+    () => {
+      getStudents();
+      const filtersd = students.filter(
+        (ele) => ele.id === parseInt(location.state.studentId)
+      );
+      setVal(filtersd);
+    },
+    val && val.length > 0 ? [] : [students]
+  );
 
   return (
     <div>
@@ -420,6 +445,12 @@ const Payment = ({
           </h4>
 
           <Grid item xs={12} className={classes.form_padding}>
+            <div className={classes.pair_student_name}>
+              <span>أسم الطالب: </span>{" "}
+              <span className={classes.name}>
+                {val && val.length !== 0 ? val[0].student_name : null}
+              </span>
+            </div>
             <div className="flexing_items">
               <Grid item xs={12} md={4} className={classes.custom_border}>
                 <div className="payment_methods col-md-6">
@@ -677,15 +708,15 @@ const Payment = ({
                       component="label"
                       style={{ width: "100%" }}
                     >
-                      <form encType="multipart/form-data">
+                      <form encType="multipart/form-data" style={{width:"74%"}}>
                         <input
-                          hidden
+                          
                           id={1}
                           type="file"
                           onChange={handelUploadChange}
                         />
                       </form>
-                      أختيار صوره
+                      <span>أختيار صوره</span>
                     </Button>
                   </Grid>
 
@@ -761,6 +792,8 @@ const Payment = ({
 Payment.propTypes = {
   getTransactoinMethode: PropTypes.func.isRequired,
   getStaticData: PropTypes.func.isRequired,
+  getStudents: PropTypes.func.isRequired,
+  students: PropTypes.object,
   transactionData: PropTypes.object,
   date: PropTypes.string,
 };
@@ -768,10 +801,12 @@ Payment.propTypes = {
 const mapStateToProps = (state) => ({
   transactionData: state.transactionData,
   staticData: state.data.staticData,
+  students: state.students,
   date: state.date,
 });
 
 export default connect(mapStateToProps, {
   getTransactoinMethode,
   getStaticData,
+  getStudents,
 })(Payment);

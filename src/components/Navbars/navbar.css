@@ -1,0 +1,36 @@
+.primary svg{
+    color:#0d6efd
+}
+
+.secondary svg{
+    color:#6c757d
+}
+.success svg{
+    color:#198754
+}
+.warning svg{
+    color:#ffc107
+}
+.danger svg{
+    color:#dc3545
+}
+.light svg{
+    color:#f8f9fa
+}
+.info svg{
+    color:#0dcaf0
+}
+.userStatus{
+    background: rgb(255 255 255 / 100%);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow:1px 1px 5px #aaa;
+    justify-content:center
+  }
+@media (min-width:768px) and (max-width:960px){
+    .userStatus{
+        margin-left:25px
+    }
+}

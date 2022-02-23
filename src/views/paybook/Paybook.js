@@ -14,6 +14,7 @@ import PaymentIcon from "@material-ui/icons/Payment";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { getPaymentMethode } from "../../action/PaymentMethod";
+import {getStudents} from "../../action/students";
 import { useLocation, useHistory } from "react-router-dom";
 import Payment from "../Payment/Payment";
 import Animations from "../LoadingComponent/LoadingComponent";
@@ -35,9 +36,18 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
+  pair_student_name:{
+    background: "#fff",
+    borderBottom: "1px solid #ddd",
+    padding: "20px",
+  },
+  name:{
+    color:"#a3a3a3",
+    fontSize:"15px"
+  }
 }));
 
-const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
+const Paybook = ({ getPaymentMethode,getStudents , PaymentData: { PaymentData }  , students:{students} }) => {
   const classes = useStyles();
   let location = useLocation();
   let history = useHistory();
@@ -55,8 +65,18 @@ const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
     setMyParam(location.state.myParam);
     getPaymentMethode(location.state.myParam);
   }, [getPaymentMethode]);
+  
+  const [val , setVal] = useState(null)
+  useEffect(() => {
+    getStudents();
+  const filtersd = students.filter((ele) => ele.id === parseInt(location.state.myParam));
+  setVal(filtersd);
+  } , val && val.length > 0 ? [] : [students])
   return (
     <div>
+      <div className={classes.pair_student_name}>
+      <span >أسم الطالب: </span> <span className={classes.name}>{val && val.length !== 0 ? val[0].student_name: null}</span>
+      </div>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -204,13 +224,16 @@ const Paybook = ({ getPaymentMethode, PaymentData: { PaymentData } }) => {
 
 Paybook.propTypes = {
   getPaymentMethode: PropTypes.func.isRequired,
+  getStudents: PropTypes.func.isRequired,
   PaymentData: PropTypes.object,
+  students:PropTypes.object,
   date: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   PaymentData: state.PaymentData,
+  students:state.students,
   date: state.date,
 });
 
-export default connect(mapStateToProps, { getPaymentMethode })(Paybook);
+export default connect(mapStateToProps, { getPaymentMethode ,getStudents })(Paybook);

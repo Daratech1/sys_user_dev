@@ -145,7 +145,8 @@ const headerStyle = () => ({
     alignItems: "center",
     justifyContent: "center",
     }
-  }
+  },
+  
 });
 
 export default headerStyle;
