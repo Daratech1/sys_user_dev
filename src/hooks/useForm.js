@@ -112,7 +112,7 @@ const useForm = (num) => {
         
           setErrors({
             ...errors,
-            birth_date: "يجب إدخال تاريخ الميلاد قبل 4 سنوات ",
+            birth_date: "عمر الطالب لا يمكن ان يكون اقل من 4 سنوات ",
           });
         }
          else {
@@ -380,14 +380,16 @@ const useForm = (num) => {
   };
 };
 function checkDate(val) {
-  var d = new Date();
-  d.setFullYear(d.getFullYear() + 4);
+  var Today = new Date();
   var current = new Date(val).getTime()
-  if (d > current) {
-   return true
-  } else {
-    return false
+
+  const diffTime = Math.abs(current - Today);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 1460 || current >= Today) {
+    return true
   }
+  return false
    
 }
 export default useForm;
