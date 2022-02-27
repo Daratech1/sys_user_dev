@@ -25,6 +25,8 @@ import CallForm from "components/inputs/CallForm";
 import { callStudent } from "action/students";
 import { sendCode,verifyCode } from "action/mobileCode";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import GppBadIcon from '@mui/icons-material/GppBad';
+
 
 const steps = [ "","", ""];
 
@@ -111,7 +113,7 @@ ColorlibStepIcon.propTypes = {
 
 const theme = createTheme();
 const fieldNum = 0
-const StudentCallStepper=({ handleClose,loading,msg,callStudent,sendCode,verifyCode,code,user:{phone} })=> {
+const StudentCallStepper=({ handleClose,loading,msg,success,callStudent,sendCode,verifyCode,code,user:{phone} })=> {
   const [activeStep, setActiveStep] = React.useState(0);
   const [validCode, setValidCode] = React.useState(false);
 
@@ -189,7 +191,7 @@ const StudentCallStepper=({ handleClose,loading,msg,callStudent,sendCode,verifyC
           <>
            
            {loading ? <div style={{textAlign:"center"}}><CircularProgress /></div>:<>
-            {msg ?  <div className="message-box">
+            {!success ?  <div className="message-box">
               <GppBadIcon  style={{color:"red"}} />
               <Typography variant="h5" align="center">
                {msg}
@@ -197,7 +199,7 @@ const StudentCallStepper=({ handleClose,loading,msg,callStudent,sendCode,verifyC
             </div>: <div className="message-box">
               <CheckCircleIcon color="info" />
               <Typography variant="h5" align="center">
-                تم تقديم طلبك بنجاح
+              {msg}
               </Typography>
             </div>}
           </>}
@@ -267,6 +269,8 @@ const mapStateToProps = (state) => ({
   code: state.mobileCode.code,
   user: state.auth.user,
   loading:state.students.loading,
-  msg:state.students.msg
+  msg:state.students.msg,
+  success:state.students.success
+
 });
 export default connect(mapStateToProps, { callStudent,sendCode,verifyCode })(StudentCallStepper);

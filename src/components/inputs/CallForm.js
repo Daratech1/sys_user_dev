@@ -45,7 +45,7 @@ const useStyles = makeStyles(styles);
 
 const CallForm = ({ students: { students }, errors, handleChange }) => {
   const classes = useStyles();
- 
+  const girls = students.filter(student=> student.gender == 0)
   
  
   return (
@@ -64,7 +64,7 @@ const CallForm = ({ students: { students }, errors, handleChange }) => {
               <select name="student_id" onChange={(e) => handleChange(e)}>
                 <option value="">إختر الطالب</option>
                 {students &&
-                  students.map((opt) => (
+                  girls.map((opt) => (
                     <option key={opt.id} value={opt.id}>
                       {opt.student_name}
                     </option>

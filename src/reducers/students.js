@@ -1,9 +1,10 @@
-import { GET_STUDENTS,CALL_STUDENTS } from "../action/types";
+import { GET_STUDENTS,CALL_STUDENTS,FAIL_CALL } from "../action/types";
 
 const initialState = {
   students: [],
   loading: true,
-  msg:[]
+  msg:'',
+  success:false
 };
 export default (state = initialState, action) => {
   const { type, payload } = action;
@@ -16,6 +17,14 @@ export default (state = initialState, action) => {
       case CALL_STUDENTS:
         return {
           ...state,
+          msg:payload.message,
+          success:payload.success,
+          loading: false,
+        };
+      case FAIL_CALL:
+        return {
+          ...state,
+          msg:payload,
           loading: false,
         };
     default:
