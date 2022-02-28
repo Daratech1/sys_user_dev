@@ -11,6 +11,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
+import Tooltip from "@material-ui/core/Tooltip";
 // core components
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 
@@ -28,6 +29,7 @@ export default function Sidebar(props) {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
+        console.log(prop);
         var activePro = " ";
         var listItemClasses;
         if (prop.path === "/upgrade-to-pro") {
@@ -50,7 +52,8 @@ export default function Sidebar(props) {
             activeClassName="active"
             key={key}
           >
-            <ListItem button className={classes.itemLink + listItemClasses}>
+            
+            <ListItem button className={classes.itemLink + listItemClasses} style={{cursor:prop.path === "/father" ? "no-drop" : prop.path === "/typography" ?  "no-drop" : "pointer" , opacity:prop.path === "/father" ? ".5" : prop.path === "/typography" ?  ".5" : "1"}}>
               {typeof prop.icon === "string" ? (
                 <Icon
                   className={classNames(classes.itemIcon, whiteFontClasses, {

@@ -28,7 +28,7 @@ const headerStyle = () => ({
     transition: "all 150ms ease 0s",
     minHeight: "50px",
     display: "block",
-    paddingLeft: "200px",
+    // paddingLeft: "200px",
     "@media (max-width: 1400px)": {
       paddingLeft: "5px",
   }

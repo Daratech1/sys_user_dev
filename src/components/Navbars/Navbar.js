@@ -15,6 +15,7 @@ import RTLNavbarLinks from "./RTLNavbarLinks.js";
 import Button from "components/CustomButtons/Button.js";
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import Divider from '@material-ui/core/Divider';
+import Tooltip from "@material-ui/core/Tooltip";
 //hooks
 //import { useRouteName } from "hooks";
 import { connect } from "react-redux";
@@ -45,21 +46,45 @@ function Header({rtlActive , handleDrawerToggle , color  , user:{user}}) {
         <div className={ opennav ? classes.flex : classes.opennavIcon}>
           {/* Here we create navbar brand, based on route name */}
           {window.screen.availWidth <= 767 ? <Divider /> : null}
-          <Button color="transparent" href="#" className={classes.title}>
+          <Tooltip
+            title="سيكون متاح قريبا"
+            aria-label="سيكون متاح قريبا"
+            placement="top-bottom"
+          >
+          <Button color="transparent" href="#" className={classes.title} style={{cursor: "no-drop" , color:"#aaa"}}>
              الخدمات
           </Button>
+          </Tooltip>
           {window.screen.availWidth <= 767 ? <Divider /> : null}
-          <Button color="transparent" href="#" className={classes.title}>
+          <Tooltip
+            title="سيكون متاح قريبا"
+            aria-label="سيكون متاح قريبا"
+            placement="top-bottom"
+          >
+          <Button color="transparent" href="#" className={classes.title} style={{cursor: "no-drop" , color:"#aaa"}}>
              عن النظام
           </Button>
+          </Tooltip>
           {window.screen.availWidth <= 767 ? <Divider /> : null}
-          <Button color="transparent" href="#" className={classes.title}>
+          <Tooltip
+            title="سيكون متاح قريبا"
+            aria-label="سيكون متاح قريبا"
+            placement="top-bottom"
+          >
+          <Button color="transparent" href="#" className={classes.title} style={{cursor: "no-drop" , color:"#aaa"}}>
           رؤيتنا  
          </Button>
-         <Button color="transparent" href="#" className={classes.title}>
+         </Tooltip>
+
+         <Tooltip
+            title="سيكون متاح قريبا"
+            aria-label="سيكون متاح قريبا"
+            placement="top-bottom"
+          >
+         <Button color="transparent" href="#" className={classes.title} style={{cursor: "no-drop" , color:"#aaa"}}>
              أسئلة شائعة
           </Button>
-        
+          </Tooltip>
         
           {window.screen.availWidth <= 767 ? <Divider /> : null}
         </div>
