@@ -2,7 +2,8 @@ var Promise = require("promise");
 import instance from "uitils/api";
 import {
 GET_STUDENTS,
-CALL_STUDENTS
+CALL_STUDENTS,
+FAIL_CALL
 } from "./types";
 
 export const getStudents = () => (dispatch) => {
@@ -28,10 +29,13 @@ export const callStudent = (student_id) => (dispatch) => {
    
     instance.post(`/api/user/student/${student_id}/student_call`).then(
       (res) => {
-         dispatch({ type:CALL_STUDENTS, payload: res.data.data});
+         dispatch({ type:CALL_STUDENTS, payload: res.data});
         resolve(res);
       },
       (err) => {
+        const errors = err.response.data.message;
+        dispatch({ type: FAIL_CALL, payload:errors});
+
         reject(err);
 
       }

@@ -47,16 +47,16 @@ const RequestDetails = ({ filterobj }) => {
         alignItems="center"
       >
         <Box display="flex" alignItems="center" mb={3}>
-          {filterobj.gender_id === "2" ? (
+          {filterobj.gender=== "1" ? (
             <Avatar
-              alt="Remy Sharp"
+              alt={filterobj.student_name}
               name={filterobj.id}
-              src="https://image.flaticon.com/icons/png/512/190/190600.png"
+              src={Ficon}
               className={classes.large}
             />
           ) : (
             <Avatar
-              alt=""
+              alt={filterobj.student_name}
               src="https://media.istockphoto.com/vectors/european-in-hijab-vector-illustration-a-fairskinned-muslim-woman-vector-id1211606262?k=20&m=1211606262&s=612x612&w=0&h=cNHeekspjhRupOGa2uylejnznaq8huJobb0uYoeSop0="
               className={classes.large}
             />

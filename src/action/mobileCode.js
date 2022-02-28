@@ -4,10 +4,10 @@ import {
 SEND_CODE,VERIFY_CODE} from "./types";
 import {setAlert} from './alert'
 
-export const sendCode = () => (dispatch) => {
+export const sendCode = (phone) => (dispatch) => {
     const promise = new Promise((resolve, reject) => {
      
-      instance.get("/api/user/mobile/send_code").then(
+      instance.get(`/api/user/mobile/send_code?phone=${phone?.phone || null}`).then(
         (res) => {
            dispatch({ type:SEND_CODE, payload: res.data.code});
           resolve(res);

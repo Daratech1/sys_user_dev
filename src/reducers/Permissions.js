@@ -3,7 +3,7 @@ import { GET_PERMISSIONS,CREATE_PERMISSIONS,GET_PERMISSION_ABSENCE } from "../ac
 const initialState = {
   permissions: [],
   absence:{},
-  loading: true,
+  perLoading: true,
 };
 export default (state = initialState, action) => {
   const { type, payload } = action;
@@ -12,19 +12,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         permissions: payload,
-        loading: false,
+        perLoading: false,
       };
       case GET_PERMISSION_ABSENCE:
       return {
         ...state,
         absence: payload,
-        loading: false,
+        perLoading: false,
       };
       case CREATE_PERMISSIONS:
       return {
         ...state,
         permissions:[payload,...state.permissions],
-        loading: false,
+        perLoading: false,
       };
     default:
       return state;

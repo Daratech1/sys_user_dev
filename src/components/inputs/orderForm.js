@@ -33,7 +33,7 @@ const styles = () => ({
 });
 const useStyles = makeStyles(styles);
 
-const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { nationalities } }) => {
+const OrderForm = ({ errors,initialVal,getDateSlots,usedSlotsArry, handleChange, data: { nationalities } }) => {
   const classes = useStyles();
   const handleSlots = (time) => {
     getDateSlots(time)
@@ -76,6 +76,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="اسم الطالب رباعي"
+                value={initialVal?.student_name}
               />
               {errors.student_name && (
                 <small className="error-input">{errors.student_name}</small>
@@ -93,6 +94,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="هوية الطالب "
+                value={initialVal?.national_id}
               />
               {errors.national_id && (
                 <small className="error-input">{errors.national_id}</small>
@@ -111,6 +113,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="مكان الميلاد"
+                value={initialVal?.birth_place}
               />
               {errors.birth_place && (
                 <small className="error-input">{errors.birth_place}</small>
@@ -128,6 +131,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="تاريخ الميلاد"
+                value={initialVal?.birth_date}
               />
               {errors.birth_date && (
                 <small className="error-input">{errors.birth_date}</small>
@@ -137,7 +141,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
           <Grid item xs={6} sm={4}>
             <div className="form-group">
               <label>الجنسية </label>
-              <select name="nationality_id" onChange={(e) => handleChange(e)}>
+              <select name="nationality_id" onChange={(e) => handleChange(e)} value={initialVal?.nationality_id}>
                 <option value="">إختر الجنسية</option>
                 {handleSelectNationality()}
               </select>
@@ -160,6 +164,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="تحديد يوم المقابلة"
+                value={initialVal?.selected_date}
               />
               {errors.selected_date && (
                 <small className="error-input">{errors.selected_date}</small>
@@ -169,7 +174,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
           <Grid item xs={12} sm={4}  className={classes.margin_bottom}>
             <div className="form-group">
               <label>تحديد التوقيت بالساعة </label>
-              <select name="selected_time" onChange={(e) => handleChange(e)}>
+              <select name="selected_time" onChange={(e) => handleChange(e)} value={initialVal?.selected_time}>
                 <option value="">إختر التوقيت</option>
                 {usedSlotsArry.length > 0 ? (
                   usedSlotsArry &&
@@ -195,7 +200,7 @@ const OrderForm = ({ errors,getDateSlots,usedSlotsArry, handleChange, data: { na
               <FormLabel className={classes.labelText} component="legend">
                 تحديد مكان المقابلة{" "}
               </FormLabel>
-              <RadioGroup row aria-label="online" name="online">
+              <RadioGroup row aria-label="online" name="online" value={initialVal?.online}>
                 <FormControlLabel
                   value="1"
                   control={<Radio color="info" />}

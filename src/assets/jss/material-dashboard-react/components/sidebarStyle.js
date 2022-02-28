@@ -164,10 +164,7 @@ const sidebarStyle = (theme) => ({
       color: "#2A2666",
      
     },
-    "&:nth-of-type(5)": {
-      [theme.breakpoints.down("sm")]: {
-      }
-    },
+   
     "&:nth-of-type(6)": {
       display: "none",
       [theme.breakpoints.down("sm")]: {
@@ -202,12 +199,17 @@ const sidebarStyle = (theme) => ({
       display: "none",
       [theme.breakpoints.down("sm")]: {
       }
-    }, "&:nth-of-type(13)": {
+    },
+     "&:nth-of-type(13)": {
       display: "none",
       [theme.breakpoints.down("sm")]: {
       }
     },
-   
+    "&:nth-of-type(14)": {
+      display: "none",
+      [theme.breakpoints.down("sm")]: {
+      }
+    },
     
   },
   itemLink: {

@@ -24,6 +24,9 @@ import VerfyCode from "components/inputs/veryficationInput";
 import CallForm from "components/inputs/CallForm";
 import { callStudent } from "action/students";
 import { sendCode,verifyCode } from "action/mobileCode";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import GppBadIcon from '@mui/icons-material/GppBad';
+
 
 const steps = [ "","", ""];
 
@@ -110,13 +113,12 @@ ColorlibStepIcon.propTypes = {
 
 const theme = createTheme();
 const fieldNum = 0
-const StudentCallStepper=({ handleClose,callStudent,sendCode,verifyCode,code,user:{phone} })=> {
+const StudentCallStepper=({ handleClose,loading,msg,success,callStudent,sendCode,verifyCode,code,user:{phone} })=> {
   const [activeStep, setActiveStep] = React.useState(0);
   const [validCode, setValidCode] = React.useState(false);
 
   const finishForm = ()=>{
     handleClose()
-    callStudent(values.student_id)
   }
   const { handleChange, values, errors,handleSubmit, disableBtn } = useForm(fieldNum);
 
@@ -136,6 +138,8 @@ const StudentCallStepper=({ handleClose,callStudent,sendCode,verifyCode,code,use
     } else if (activeStep === 1) {
       setActiveStep(activeStep + 1);
       verifyCode();
+      callStudent(values.student_id)
+
     }
   };
 
@@ -186,13 +190,19 @@ const StudentCallStepper=({ handleClose,callStudent,sendCode,verifyCode,code,use
         return (
           <>
            
-              <div className="message-box">
-                <CheckCircleIcon color="info" />
-                <Typography variant="h5" align="center">
-                  تم تقديم طلبك بنجاح
-                </Typography>
-              </div>
-           
+           {loading ? <div style={{textAlign:"center"}}><CircularProgress /></div>:<>
+            {!success ?  <div className="message-box">
+              <GppBadIcon  style={{color:"red"}} />
+              <Typography variant="h5" align="center">
+               {msg}
+              </Typography>
+            </div>: <div className="message-box">
+              <CheckCircleIcon color="info" />
+              <Typography variant="h5" align="center">
+              {msg}
+              </Typography>
+            </div>}
+          </>}
           </>
         );
       default:
@@ -257,6 +267,10 @@ StudentCallStepper.propTypes = {
 };
 const mapStateToProps = (state) => ({
   code: state.mobileCode.code,
-  user: state.auth.user
+  user: state.auth.user,
+  loading:state.students.loading,
+  msg:state.students.msg,
+  success:state.students.success
+
 });
 export default connect(mapStateToProps, { callStudent,sendCode,verifyCode })(StudentCallStepper);

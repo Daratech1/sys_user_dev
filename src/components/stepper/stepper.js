@@ -29,6 +29,8 @@ import FeedIcon from '@mui/icons-material/Feed';
 import secondUseForm from "hooks/secondUseform";
 import { getApplication } from "action/applications";
 import GppBadIcon from '@mui/icons-material/GppBad';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 const steps = ["", "", "",""];
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
@@ -113,14 +115,16 @@ ColorlibStepIcon.propTypes = {
 
 const theme = createTheme();
 const fieldNum = 7
-const Checkout = ({ handleClose,msg, createApplication, getApplication,sendCode,verifyCode,code,user:{phone}  }) => {
+const Checkout = ({ handleClose,msg,loading, createApplication, getApplication,sendCode,verifyCode,code,user:{phone}  }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [validCode, setValidCode] = React.useState(false);
   const [fieldNum2,setFieldNum2] =  React.useState(5)
+  const [firstForm,setFirstForm] = React.useState()
+  const [secondForm,setSecondForm] = React.useState()
 
   const finishForm = () => {
+    getApplication()
      handleClose();
-     location.reload()
   };
   const getTransRequired = (e)=>{
     if(e){
@@ -143,9 +147,11 @@ const Checkout = ({ handleClose,msg, createApplication, getApplication,sendCode,
   const handleNext = () => {
     if (activeStep === 0) {
       handleSubmit();
+      setFirstForm(values)
       setActiveStep(activeStep + 1);
     } else if (activeStep === 1) {
       handleSubmit2();
+      setSecondForm(values2)
       setActiveStep(activeStep + 1);
       sendCode();
     } else if (activeStep === 2) {
@@ -204,23 +210,31 @@ const Checkout = ({ handleClose,msg, createApplication, getApplication,sendCode,
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <OrderForm errors={errors} handleChange={handleChange} />;
+        return <OrderForm initialVal={firstForm} errors={errors} handleChange={handleChange} />;
       case 1:
-        return <SecondOrderForm errors2={errors2} getTransRequired={getTransRequired} handleChange2={handleChange2} />;
+        return <SecondOrderForm initialVal={secondForm} errors2={errors2} getTransRequired={getTransRequired} handleChange2={handleChange2} />;
       case 2:
         return (
           <>
-            <VerfyCode checkValidCode={checkValidCode} phone={phone} />
+            <VerfyCode  checkValidCode={checkValidCode} phone={phone} />
           </>
         );
       case 3:
         return (
           <>
-          
-         {msg ?  <div className="message-box">
+          {loading ? <div style={{textAlign:"center"}}><CircularProgress /></div>:<>
+            {msg ?  <div className="message-box">
               <GppBadIcon  style={{color:"red"}} />
               <Typography variant="h5" align="center">
-               {msg}
+                
+                  {
+                    msg.map((prop,i)=>
+                      (
+                        <p key={i} style={{display:"block"}}>{prop}</p>
+
+                      )
+                    )
+                  }
               </Typography>
             </div>: <div className="message-box">
               <CheckCircleIcon color="info" />
@@ -228,6 +242,8 @@ const Checkout = ({ handleClose,msg, createApplication, getApplication,sendCode,
                 تم تقديم طلبك بنجاح
               </Typography>
             </div>}
+          </>}
+       
            
           </>
         );
@@ -293,6 +309,7 @@ Checkout.propTypes = {
 const mapStateToProps = (state) => ({
   code: state.mobileCode.code,
   user: state.auth.user,
-  msg : state.applications.msg
+  msg : state.applications.msg,
+  loading:state.applications.loading
 });
 export default connect(mapStateToProps, { createApplication,getApplication,sendCode,verifyCode })(Checkout);
