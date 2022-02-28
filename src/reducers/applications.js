@@ -13,13 +13,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         applications: payload,
-        loading: false,
       };
     case GET_PLANS:
       return {
         ...state,
         plans: payload,
-        loading: false,
       };
     case CREATE_APPLICATIONS:
       return {
