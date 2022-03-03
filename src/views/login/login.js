@@ -22,7 +22,7 @@ import TwiterIcon from "assets/img/social-icons/twiter.png";
 import VerfyCode from "components/inputs/veryficationInput";
 
 import { login, codeConfirm } from "action/auth";
-
+import SecondLogo from "assets/img/logo/logo-2th.png"
 const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.down("sm")]: {
@@ -144,6 +144,14 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     flexFlow: "column",
     flexDirection: "column-reverse",
+  },
+  secondLogo:{
+    width: '110px',
+    margin: "0 auto",
+    "& img": {
+      width: '100%',
+      height: '100%'
+    }
   },
   handel_pos: {
     background: "#efeeee",
@@ -307,6 +315,9 @@ const Login = ({ login, code, codeConfirm, isAuthenticated }) => {
         <Typography align="center" variant="h4" style={{ margin: "2rem 0 " }}>
           تسجيل الدخول
         </Typography>
+        <div className={classes.secondLogo}>
+          <img src={SecondLogo} alt="2th-logo"/>
+        </div>
         <div className={classes.containerInput}>
           {code ? (
             <>
