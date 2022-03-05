@@ -6,7 +6,7 @@ const dashboardStyle = {
     display: "flex",
     justifyContent: "center",
     "&:first-of-type": {
-      width: "80%",
+      width: "90%",
       margin: "0 auto",
       // marginTop: "220px",
       "@media (max-width: 1400px)": {

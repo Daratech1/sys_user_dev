@@ -201,11 +201,17 @@ export default function SliderCard() {
     <Grid container spacing={2}>
       <Grid container className={classes.root} spacing={2}>
         <Grid item>
-          <Grid container justifyContent="center" spacing={spacing}>
+          <Grid container justifyContent="center" spacing={spacing} >
             <Grid item className={classes.fullWidthmob}>
-              <Card className={(classes.root, classes.cardWidth)}>
+              <Card className={(classes.root, classes.cardWidth)} >
                 <CardActionArea className={classes.fullHeihgt}>
-                  <CardContent className={classes.fullHeihgt}>
+                  <Tooltip
+                      title="غير متوفر حاليا"
+                      aria-label="غير متوفر حاليا"
+                      placement="bottom-start"
+                      
+                    >
+                  <CardContent className={classes.fullHeihgt} style={{cursor:"no-drop" , opacity:".5"}}>
                     <Typography
                       gutterBottom
                       variant="h5"
@@ -255,6 +261,7 @@ export default function SliderCard() {
                       </Grid>
                     </Grid>
                   </CardContent>
+                  </Tooltip>
                 </CardActionArea>
               </Card>
             </Grid>
@@ -262,7 +269,13 @@ export default function SliderCard() {
             <Grid item className={classes.fullWidthmob}>
               <Card className={(classes.root, classes.cardWidth)}>
                 <CardActionArea>
-                  <CardContent>
+                <Tooltip
+                      title="غير متوفر حاليا"
+                      aria-label="غير متوفر حاليا"
+                      placement="bottom-start"
+                      
+                    >
+                  <CardContent style={{cursor:"no-drop" , opacity:".5"}}>
                     <Typography gutterBottom variant="h5" component="h2">
                       متابعه الطالب
                     </Typography>
@@ -270,6 +283,7 @@ export default function SliderCard() {
                       <canvas id="myChart3" width="100%" height="90%"></canvas>
                     </Grid>
                   </CardContent>
+                  </Tooltip>
                 </CardActionArea>
               </Card>
             </Grid>
@@ -277,7 +291,13 @@ export default function SliderCard() {
             <Grid item className={classes.fullWidthmob}>
               <Card className={(classes.root, classes.cardWidth)}>
                 <CardActionArea className={classes.fullHeihgt}>
-                  <CardContent className={classes.fullHeihgt}>
+                <Tooltip
+                      title="غير متوفر حاليا"
+                      aria-label="غير متوفر حاليا"
+                      placement="bottom-start"
+                      
+                    >
+                  <CardContent className={classes.fullHeihgt} style={{cursor:"no-drop" , opacity:".5"}}>
                     <Typography
                       gutterBottom
                       variant="h5"
@@ -351,6 +371,7 @@ export default function SliderCard() {
                       </Grid>
                     </Grid>
                   </CardContent>
+                  </Tooltip>
                 </CardActionArea>
               </Card>
             </Grid>
@@ -358,7 +379,13 @@ export default function SliderCard() {
             <Grid item className={classes.fullWidthmob}>
               <Card className={(classes.root, classes.cardWidth)}>
                 <CardActionArea>
-                  <CardContent>
+                <Tooltip
+                      title="غير متوفر حاليا"
+                      aria-label="غير متوفر حاليا"
+                      placement="bottom-start"
+                      
+                    >
+                  <CardContent style={{cursor:"no-drop" , opacity:".5"}}>
                     <Typography gutterBottom variant="h5" component="h2">
                       نسبه المشاركه
                     </Typography>
@@ -372,6 +399,7 @@ export default function SliderCard() {
                       ></canvas>
                     </Grid>
                   </CardContent>
+                  </Tooltip>
                 </CardActionArea>
               </Card>
             </Grid>
@@ -379,7 +407,13 @@ export default function SliderCard() {
             <Grid item className={classes.fullWidthmob}>
               <Card className={(classes.root, classes.cardWidth)}>
                 <CardActionArea>
-                  <CardContent>
+                <Tooltip
+                      title="غير متوفر حاليا"
+                      aria-label="غير متوفر حاليا"
+                      placement="bottom-start"
+                      
+                    >
+                  <CardContent style={{cursor:"no-drop" , opacity:".5"}}>
                     <Typography gutterBottom variant="h5" component="h2">
                       نسب الغياب
                     </Typography>
@@ -387,6 +421,7 @@ export default function SliderCard() {
                       <canvas id="myChart" width="100%" height="90%"></canvas>
                     </Grid>
                   </CardContent>
+                  </Tooltip>
                 </CardActionArea>
               </Card>
             </Grid>
