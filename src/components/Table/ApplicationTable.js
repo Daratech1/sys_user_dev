@@ -61,7 +61,7 @@ export default function AppTable(props) {
     return (
       <tr key={prop.id}>
         <td className="table-avatar">
-          {prop.gender === '1' ? (
+          {prop.gender === 1 ? (
             <Avatar
               alt={prop.student_name}
               src={Micon}

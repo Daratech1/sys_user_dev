@@ -47,7 +47,7 @@ const RequestDetails = ({ filterobj }) => {
         alignItems="center"
       >
         <Box display="flex" alignItems="center" mb={3}>
-          {filterobj.gender=== "1" ? (
+          {filterobj.gender=== 1 ? (
             <Avatar
               alt={filterobj.student_name}
               name={filterobj.id}
