@@ -53,7 +53,7 @@ const Paybook = ({ getPaymentMethode,getStudents , PaymentData: { PaymentData } 
   let history = useHistory();
   const [myParam, setMyParam] = useState("");
   const handelTransactionId = (e, eleValone, eleValtwo) => {
-    history.push(`/admin/payment/`, {
+    history.push(`/payment/`, {
       transactionId: e,
       studentId: location.state.myParam,
     });

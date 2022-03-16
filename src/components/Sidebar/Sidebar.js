@@ -29,7 +29,6 @@ export default function Sidebar(props) {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-        console.log(prop);
         var activePro = " ";
         var listItemClasses;
         if (prop.path === "/upgrade-to-pro") {

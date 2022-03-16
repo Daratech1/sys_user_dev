@@ -22,7 +22,7 @@ export default function AppRoute() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/resetpassword" component={ResetPassword} />
-        <PrivateRoute  path="/admin" component={RTL} />
+        <PrivateRoute path="/" component={RTL} />
       </Switch>
     </Router>
   );

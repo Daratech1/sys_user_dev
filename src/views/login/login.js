@@ -199,7 +199,7 @@ const Login = ({ login, code, codeConfirm, isAuthenticated }) => {
     setShowPassword(!showPassword);
   };
    if (isAuthenticated) {
-    history.push("/admin");
+    history.push("/");
    }
   const checkValidCode = (input) => {
     if (input == code) {

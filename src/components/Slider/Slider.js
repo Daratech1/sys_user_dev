@@ -206,8 +206,8 @@ export default function SliderCard() {
               <Card className={(classes.root, classes.cardWidth)} >
                 <CardActionArea className={classes.fullHeihgt}>
                   <Tooltip
-                      title="غير متوفر حاليا"
-                      aria-label="غير متوفر حاليا"
+                      title="قريبا"
+                      aria-label="قريبا"
                       placement="bottom-start"
                       
                     >
@@ -270,8 +270,8 @@ export default function SliderCard() {
               <Card className={(classes.root, classes.cardWidth)}>
                 <CardActionArea>
                 <Tooltip
-                      title="غير متوفر حاليا"
-                      aria-label="غير متوفر حاليا"
+                      title="قريبا"
+                      aria-label="قريبا"
                       placement="bottom-start"
                       
                     >
@@ -292,8 +292,8 @@ export default function SliderCard() {
               <Card className={(classes.root, classes.cardWidth)}>
                 <CardActionArea className={classes.fullHeihgt}>
                 <Tooltip
-                      title="غير متوفر حاليا"
-                      aria-label="غير متوفر حاليا"
+                      title="قريبا"
+                      aria-label="قريبا"
                       placement="bottom-start"
                       
                     >
@@ -380,8 +380,8 @@ export default function SliderCard() {
               <Card className={(classes.root, classes.cardWidth)}>
                 <CardActionArea>
                 <Tooltip
-                      title="غير متوفر حاليا"
-                      aria-label="غير متوفر حاليا"
+                      title="قريبا"
+                      aria-label="قريبا"
                       placement="bottom-start"
                       
                     >
@@ -408,8 +408,8 @@ export default function SliderCard() {
               <Card className={(classes.root, classes.cardWidth)}>
                 <CardActionArea>
                 <Tooltip
-                      title="غير متوفر حاليا"
-                      aria-label="غير متوفر حاليا"
+                      title="قريبا"
+                      aria-label="قريبا"
                       placement="bottom-start"
                       
                     >

@@ -128,7 +128,6 @@ export const register = (data) => (dispatch) => {
         const errors = err.response.data.errors
         const x = Object.values(errors)
         var merged = [].concat.apply([], x)
-        console.log(merged)
         if (merged) 
     {
       merged.forEach(error=> dispatch(setAlert(error,'error')))

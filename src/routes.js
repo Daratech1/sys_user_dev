@@ -43,7 +43,7 @@ const dashboardRoutes = [
     rtlName: "الرئيسية",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/student",
@@ -51,7 +51,7 @@ const dashboardRoutes = [
     rtlName: "أبنائى",
     icon: WcIcon,
     component: TableList,
-    layout: "/admin",
+    layout: "",
   },
   
   {
@@ -60,7 +60,7 @@ const dashboardRoutes = [
     rtlName: "ولى الأمر",
     icon: SupervisorAccountIcon,
     component: DashboardPage,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/typography",
@@ -68,7 +68,7 @@ const dashboardRoutes = [
     rtlName: "الدعم الفنى",
     icon: LocalLibraryIcon,
     component: DashboardPage,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/settings",
@@ -76,7 +76,7 @@ const dashboardRoutes = [
     rtlName: "",
     icon: SettingsIcon,
     component: Settings,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/reports",
@@ -84,7 +84,7 @@ const dashboardRoutes = [
     rtlName: "أبناء",
     icon: LocalLibraryIcon,
     component: Reports,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/profile",
@@ -92,7 +92,7 @@ const dashboardRoutes = [
     rtlName: "",
     icon: LocalLibraryIcon,
     component: Profile,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/changepassword",
@@ -100,7 +100,7 @@ const dashboardRoutes = [
     rtlName: "",
     icon: LocalLibraryIcon,
     component: ChangePassWord,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/children",
@@ -108,7 +108,7 @@ const dashboardRoutes = [
     rtlName: "أبناء",
     icon: LocalLibraryIcon,
     component: MyChildren,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/childInfo",
@@ -116,7 +116,7 @@ const dashboardRoutes = [
     rtlName: "",
     icon: LocalLibraryIcon,
     component: ChildChart,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/calenderChart",
@@ -124,7 +124,7 @@ const dashboardRoutes = [
     rtlName: "",
     icon: LocalLibraryIcon,
     component: AbsenceChart,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/payment",
@@ -132,7 +132,7 @@ const dashboardRoutes = [
     rtlName: "",
     icon: LocalLibraryIcon,
     component: Payment,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/paybook",
@@ -140,7 +140,7 @@ const dashboardRoutes = [
     rtlName: "",
     icon: LocalLibraryIcon,
     component: Paybook,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/permissions",
@@ -148,7 +148,7 @@ const dashboardRoutes = [
     rtlName: "",
     icon: LocalLibraryIcon,
     component: Permissions,
-    layout: "/admin",
+    layout: "",
   },
 
 ];

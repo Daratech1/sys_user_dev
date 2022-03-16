@@ -78,10 +78,10 @@ const RTLNavbarLinks = ({ user, logout }) => {
   };
 
   const goProfile = () => {
-    history.push("/admin/profile");
+    history.push("/profile");
   };
   const handelChangePassword = () => {
-    history.push("/admin/changepassword");
+    history.push("/changepassword");
   }
   const handleLogout = () => {
     logout();

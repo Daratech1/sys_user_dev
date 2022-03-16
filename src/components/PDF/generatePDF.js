@@ -19,7 +19,6 @@ export function downloadPDF(data,tableBody,jsAutoTableOptions = { styles: {} } )
     
     const bodyCells = tableBody.map(function(obj) {
       return Object.keys(obj).reverse().map(function(key) { 
-        console.log(obj[key])
         return obj[key];
       });
     });

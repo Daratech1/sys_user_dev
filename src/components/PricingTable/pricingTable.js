@@ -130,7 +130,7 @@ const PricingTable = ({
   };
   const checkStatusApp = () => {
     const result = applications.find((o) => o.id == appId).status_id;
-    if (result > 3) {
+    if (result > 2) {
       return (
         <RegularButton variant="contained" color="primary" disabled>
           غير متاح في هذه المرحلة
@@ -141,6 +141,7 @@ const PricingTable = ({
         <RegularButton
           variant="contained"
           color="primary"
+          disabled={transportation && (!transId || !transWayValue)}
           onClick={() => sendPlan()}
         >
           تحويل
@@ -220,10 +221,11 @@ const PricingTable = ({
                 )}
               </ul>
               <hr />
+              {prop.is_discounted && 
               <div className="money-dis">
-                <span>{prop.is_discounted ? prop.discount_ammount : 0}</span>{" "}
+                <span>{prop.discount_ammount}</span>
                 وفر / رس
-              </div>{" "}
+              </div>}
               <div className="select-plan">
                 <GreenCheckbox
                   checked={prop.id == value}

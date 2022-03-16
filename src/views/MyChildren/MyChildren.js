@@ -73,7 +73,7 @@ const MyChildren = ({user:{guardian},loadUser}) => {
         guardian.students && guardian.students.map(stud =>
        
           <Grid item sm={4} xs={12} key={stud.id}>
-          <Paper className={classes.container} onClick={()=>history.push(`/admin/childInfo/${stud.id}`)}>
+          <Paper className={classes.container} onClick={()=>history.push(`/childInfo/${stud.id}`)}>
             <Box display="flex">
               <Box>
                 <Avatar
