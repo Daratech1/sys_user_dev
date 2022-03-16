@@ -426,7 +426,7 @@ const TableList = ({ getStudents, getPlan, sendPlanInfo, students: { students },
                 {showMsg ? <div className="message-box">
                   <CheckCircleIcon color="info" />
                   <Typography variant="h5" align="center" style={{ marginTop: "30px" }}>
-                    {msg.message}
+                    {msg && msg.message}
                   </Typography>
                 </div> : <PricingTable plans={plans} applications={applications} transportations={transportations} sendPlanInfo={sendPlanInfo} appId={appId} handleShow={handleShow} />}
 

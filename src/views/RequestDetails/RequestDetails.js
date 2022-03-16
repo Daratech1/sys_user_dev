@@ -5,6 +5,10 @@ import Paper from "@material-ui/core/Paper";
 import { Avatar, Grid, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import AdjustIcon from "@material-ui/icons/Adjust";
+import Ficon from "assets/img/girl.jpg";
+import Micon from "assets/img/boy.jpg";
+
+
 const styles = {
   containerPaper: {
     padding: ".5rem 2rem 2rem 0",
@@ -47,20 +51,13 @@ const RequestDetails = ({ filterobj }) => {
         alignItems="center"
       >
         <Box display="flex" alignItems="center" mb={3}>
-          {filterobj.gender=== 1 ? (
-            <Avatar
-              alt={filterobj.student_name}
-              name={filterobj.id}
-              src={Ficon}
-              className={classes.large}
-            />
-          ) : (
-            <Avatar
-              alt={filterobj.student_name}
-              src="https://media.istockphoto.com/vectors/european-in-hijab-vector-illustration-a-fairskinned-muslim-woman-vector-id1211606262?k=20&m=1211606262&s=612x612&w=0&h=cNHeekspjhRupOGa2uylejnznaq8huJobb0uYoeSop0="
-              className={classes.large}
-            />
-          )}
+
+          <Avatar
+            alt={filterobj.student_name}
+            name={filterobj.id}
+            src={filterobj.gender === 1 ? Micon : Ficon}
+            className={classes.large}
+          />
 
           <Typography variant="h4" style={{ marginRight: "1rem" }}>
             {filterobj.student_name} {filterobj.first_name}{" "}

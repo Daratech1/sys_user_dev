@@ -20,9 +20,14 @@ const useForm = (num) => {
             ...errors,
             student_name: "يجب إدخال إسم الطالب",
           });
-         
+
+        } else if (value.trim().split(/\s+/).length < 4) {
+          setErrors({
+            ...errors,
+            student_name: "يجب ادخال اسم الطالب رباعيا"
+          });
         }
-        
+
         else {
           // set the error state empty or remove the error for student_name input
 
@@ -31,7 +36,7 @@ const useForm = (num) => {
           setErrors(newObj);
         }
         break;
-        case "student_id":
+      case "student_id":
         if (value === "") {
           // we will set the error state
 
@@ -46,7 +51,7 @@ const useForm = (num) => {
           let newObj = omit(errors, "student_id");
           setErrors(newObj);
         }
-        break; 
+        break;
       case "national_id":
         if (value === "") {
           // we will set the error state
@@ -55,26 +60,26 @@ const useForm = (num) => {
             national_id: "يجب إدخال هوية الطالب",
           });
         }
-       
-        else if(value.length > 10){
+
+        else if (value.length > 10) {
           setErrors({
             ...errors,
             national_id: "يجب أن يكون رقم الهوية مكون من عشرة أرقام  ",
           });
         }
-        else if( value.match(/^[0-9]+$/) === null){
+        else if (value.match(/^[0-9]+$/) === null) {
           setErrors({
             ...errors,
-            national_id: "يجب أن يكون أرقام فقط" 
+            national_id: "يجب أن يكون أرقام فقط"
           });
         }
-        else if(  value.length < 10){
+        else if (value.length < 10) {
           setErrors({
             ...errors,
             national_id: "يجب أن يكون رقم الهوية مكون من عشرة أرقام  ",
           });
         }
-         else {
+        else {
           // set the error state empty or remove the error for student_name input
 
           //omit function removes/omits the value from given object and returns a new object
@@ -101,7 +106,7 @@ const useForm = (num) => {
       case "birth_date":
         if (value === "") {
           // we will set the error state
-         
+
           setErrors({
             ...errors,
             birth_date: "يجب إدخال تاريخ الميلاد ",
@@ -109,13 +114,13 @@ const useForm = (num) => {
         }
         if (checkDate(value)) {
           // we will set the error state
-        
+
           setErrors({
             ...errors,
             birth_date: "عمر الطالب لا يمكن ان يكون اقل من 4 سنوات ",
           });
         }
-         else {
+        else {
           // set the error state empty or remove the error for student_name input
 
           //omit function removes/omits the value from given object and returns a new object
@@ -146,6 +151,12 @@ const useForm = (num) => {
           setErrors({
             ...errors,
             selected_date: "يجب تحديد موعد المقابلة  ",
+          });
+        } else if (checkMinDate(value)) {
+          // we will set the error state
+          setErrors({
+            ...errors,
+            selected_date: "خدد موقعد ماقابلة ابتداء من غدا",
           });
         } else {
           // set the error state empty or remove the error for student_name input
@@ -267,70 +278,70 @@ const useForm = (num) => {
           setErrors(newObj);
         }
         break;
-        case "pickup_time":
-          if (value === "") {
-            // we will set the error state
-  
-            setErrors({
-              ...errors,
-              pickup_time: "يجب تحديد  تاريخ الإستئذان  ",
-            });
-          } else {
-            // set the error state empty or remove the error for student_name input
-  
-            //omit function removes/omits the value from given object and returns a new object
-            let newObj = omit(errors, "pickup_time");
-            setErrors(newObj);
-          }
-          break;
-          case "pickup_persion":
-            if (value === "") {
-              // we will set the error state
-    
-              setErrors({
-                ...errors,
-                pickup_persion: "يجب إدخال إسم المرافق للطالب  ",
-              });
-            } else {
-              // set the error state empty or remove the error for student_name input
-    
-              //omit function removes/omits the value from given object and returns a new object
-              let newObj = omit(errors, "pickup_persion");
-              setErrors(newObj);
-            }
-            break;
-            case "permission_reson":
-              if (value === "") {
-                // we will set the error state
-      
-                setErrors({
-                  ...errors,
-                  permission_reson: "يجب إدخال سبب الإستئذان    ",
-                });
-              } else {
-                // set the error state empty or remove the error for student_name input
-      
-                //omit function removes/omits the value from given object and returns a new object
-                let newObj = omit(errors, "permission_reson");
-                setErrors(newObj);
-              }
-              break;
-              case "permission_duration":
-                if (value === "") {
-                  // we will set the error state
-        
-                  setErrors({
-                    ...errors,
-                    permission_duration: "يجب إدخال مدة الإستئذان    ",
-                  });
-                } else {
-                  // set the error state empty or remove the error for student_name input
-        
-                  //omit function removes/omits the value from given object and returns a new object
-                  let newObj = omit(errors, "permission_duration");
-                  setErrors(newObj);
-                }
-                break;
+      case "pickup_time":
+        if (value === "") {
+          // we will set the error state
+
+          setErrors({
+            ...errors,
+            pickup_time: "يجب تحديد  تاريخ الإستئذان  ",
+          });
+        } else {
+          // set the error state empty or remove the error for student_name input
+
+          //omit function removes/omits the value from given object and returns a new object
+          let newObj = omit(errors, "pickup_time");
+          setErrors(newObj);
+        }
+        break;
+      case "pickup_persion":
+        if (value === "") {
+          // we will set the error state
+
+          setErrors({
+            ...errors,
+            pickup_persion: "يجب إدخال إسم المرافق للطالب  ",
+          });
+        } else {
+          // set the error state empty or remove the error for student_name input
+
+          //omit function removes/omits the value from given object and returns a new object
+          let newObj = omit(errors, "pickup_persion");
+          setErrors(newObj);
+        }
+        break;
+      case "permission_reson":
+        if (value === "") {
+          // we will set the error state
+
+          setErrors({
+            ...errors,
+            permission_reson: "يجب إدخال سبب الإستئذان    ",
+          });
+        } else {
+          // set the error state empty or remove the error for student_name input
+
+          //omit function removes/omits the value from given object and returns a new object
+          let newObj = omit(errors, "permission_reson");
+          setErrors(newObj);
+        }
+        break;
+      case "permission_duration":
+        if (value === "") {
+          // we will set the error state
+
+          setErrors({
+            ...errors,
+            permission_duration: "يجب إدخال مدة الإستئذان    ",
+          });
+        } else {
+          // set the error state empty or remove the error for student_name input
+
+          //omit function removes/omits the value from given object and returns a new object
+          let newObj = omit(errors, "permission_duration");
+          setErrors(newObj);
+        }
+        break;
       default:
         break;
     }
@@ -345,7 +356,7 @@ const useForm = (num) => {
 
     validate(name, val);
     //Let's set these values in state
-   
+
 
     // }
     setValues({
@@ -356,14 +367,14 @@ const useForm = (num) => {
     if (Object.keys(values).length >= num) {
       setDisableBtn(false);
 
-    }else{
+    } else {
       setDisableBtn(true)
     }
   };
- 
+
   const handleSubmit = (event) => {
     if (event) event.preventDefault();
-  
+
     if (Object.keys(errors).length === 0 && Object.keys(values).length !== 0) {
       // callback();
     } else {
@@ -390,6 +401,17 @@ function checkDate(val) {
     return true
   }
   return false
-   
+
+}
+
+function checkMinDate(val) {
+  var Today = new Date();
+  var current = new Date(val)
+  if (current <= Today) {
+    // selected date is in the past ro today
+    return true
+  }
+  return false
+
 }
 export default useForm;

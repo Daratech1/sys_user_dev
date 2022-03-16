@@ -48,11 +48,10 @@ export default function CustomTable(props) {
     setAnchorEl(null);
     handleOpenMeeting();
   };
-  // href={`/admin/paybook/${prop.id}`}
+  // href={`/paybook/${prop.id}`}
   const handelPayMentId = (e) => {
-    console.log(e.target)
     let idd = e.target.id;
-    history.push(`/admin/paybook/`, { myParam: idd });
+    history.push(`/paybook/`, { myParam: idd });
   };
   return (
     <div className={classes.tableResponsive}>

@@ -331,6 +331,7 @@ export default function AppTable(props) {
                         <MenuItem
                           onClick={() => handleOpen()}
                           className={classes.dropPayItem}
+                          disabled={prop.status_id > 2}
                         >
                           تفيير خطة الدفع
                         </MenuItem>

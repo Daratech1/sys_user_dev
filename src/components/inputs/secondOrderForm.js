@@ -104,7 +104,6 @@ const SecondOrderForm = ({
       default:
         break;
     }
-    console.log(transWayValue)
     handleChange2(e);
   };
   const handleTransPay = () => {

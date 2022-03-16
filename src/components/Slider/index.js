@@ -21,7 +21,7 @@ export default function SliderCard2() {
   return (
     <Grid container spacing={2} className={classes.disBlock} >
       <Grid item xs={6} sm={3} className={classes.fullwidth}>
-        <Card sx={{ maxWidth: 345 }} className={classes.cardDash}  onClick={()=>history.push('/admin/calenderChart')}>
+        <Card sx={{ maxWidth: 345 }} className={classes.cardDash}  onClick={()=>history.push('/calenderChart')}>
           <CardMedia
             component="img"
             height="264"
@@ -51,7 +51,7 @@ export default function SliderCard2() {
         </Card>
       </Grid>
       <Grid item xs={6} sm={3} className={classes.fullwidth} >
-        <Card sx={{ maxWidth: 345 }} className={classes.cardDash} onClick={()=>history.push('/admin/children')}>
+        <Card sx={{ maxWidth: 345 }} className={classes.cardDash} onClick={()=>history.push('/children')}>
           <CardMedia
             component="img"
             height="264"
@@ -81,7 +81,7 @@ export default function SliderCard2() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={6} sm={3} className={classes.fullwidth} onClick={()=>history.push('/admin/reports')}>
+      <Grid item xs={6} sm={3} className={classes.fullwidth} onClick={()=>history.push('/reports')}>
         <Card sx={{ maxWidth: 345 }} className={classes.cardDash}>
           <CardMedia
             component="img"
@@ -113,7 +113,7 @@ export default function SliderCard2() {
         </Card>
       </Grid>
       <Grid item xs={6} sm={3} className={classes.fullwidth}>
-        <Card sx={{ maxWidth: 345 }} className={classes.cardDash} onClick={()=>history.push('/admin/permissions')}>
+        <Card sx={{ maxWidth: 345 }} className={classes.cardDash} onClick={()=>history.push('/permissions')}>
           <CardMedia
             component="img"
             height="264"
