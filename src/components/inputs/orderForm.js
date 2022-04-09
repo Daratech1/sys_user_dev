@@ -59,7 +59,7 @@ const OrderForm = ({ errors,initialVal,getDateSlots,usedSlotsArry, handleChange,
     <div className={classes.formBox}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12}>
-          <Typography component="h1" variant="h4" align="center">
+          <Typography component="h1" variant="h5" align="center">
             تقديم طلب
           </Typography>
         </Grid>

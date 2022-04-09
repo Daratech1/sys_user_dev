@@ -98,7 +98,6 @@ const Coupon = ({
   return (
     <>
 
-
       <Grid
         item
         md={12}
@@ -112,55 +111,6 @@ const Coupon = ({
         </span>
         <span style={{ color: "gray" }}> ر.س </span>
       </Grid>
-
-      {couponData.data !== undefined && couponData.data.period_discount != 0 ? (
-        <Grid
-          item
-          md={12}
-          xs={12}
-          style={{ padding: "0 10px", marginBottom: "15px" }}
-        >
-          <span>خصم الفتره: </span>
-
-          <span className={classes.storNumber2}>
-            {couponData.data.period_discount}
-          </span>
-          <span style={{ color: "gray" }}> ر.س </span>
-        </Grid>
-      ) : null}
-
-      {couponData.data !== undefined &&
-        couponData.data.coupon_discount &&
-        couponData.data.is_coupon_valid ? (
-        <Grid
-          item
-          md={12}
-          xs={12}
-          style={{ padding: "0 10px", marginBottom: "15px" }}
-        >
-          <span>خصم كوبون: </span>
-          <span className={classes.storNumber2}>
-            {couponData.data.coupon_discount}
-          </span>
-          <span style={{ color: "gray" }}> ر.س </span>
-        </Grid>
-      ) : null}
-
-{couponData.data !== undefined &&
-        couponData.data.old_discount  ? (
-        <Grid
-          item
-          md={12}
-          xs={12}
-          style={{ padding: "0 10px", marginBottom: "15px" }}
-        >
-          <span>خصم سابق: </span>
-          <span className={classes.storNumber2}>
-            {couponData.data.old_discount}
-          </span>
-          <span style={{ color: "gray" }}> ر.س </span>
-        </Grid>
-      ) : null}
 
       {couponData.data !== undefined && couponData.data.vat_amount != 0 ? (
         <Grid
@@ -178,6 +128,22 @@ const Coupon = ({
         </Grid>
       ) : null}
 
+      {couponData.data !== undefined &&
+        couponData.data.old_discount ? (
+        <Grid
+          item
+          md={12}
+          xs={12}
+          style={{ padding: "0 10px", marginBottom: "15px" }}
+        >
+          <span>خصم سابق: </span>
+          <span className={classes.storNumber2}>
+            {couponData.data.old_discount}
+          </span>
+          <span style={{ color: "gray" }}> ر.س </span>
+        </Grid>
+      ) : null}
+
       {couponData.data !== undefined && couponData.data.paid_amount != 0 ? (
         <Grid
           item
@@ -189,6 +155,56 @@ const Coupon = ({
 
           <span className={classes.storNumber2}>
             {couponData.data.paid_amount}
+          </span>
+          <span style={{ color: "gray" }}> ر.س </span>
+        </Grid>
+      ) : null}
+
+{couponData.data !== undefined && couponData.data.old_residual_amount != 0 ? (
+        <Grid
+          item
+          md={12}
+          xs={12}
+          style={{ padding: "0 10px", marginBottom: "15px" }}
+        >
+          <span>متبقي : </span>
+
+          <span className={classes.storNumber2}>
+            {couponData.data.old_residual_amount}
+          </span>
+          <span style={{ color: "gray" }}> ر.س </span>
+        </Grid>
+      ) : null}
+
+
+      {couponData.data !== undefined && (couponData.data.new_period_discount != 0 || (couponData.data.period_discount != 0 && couponData.data.is_fixed_discount)) ? (
+        <Grid
+          item
+          md={12}
+          xs={12}
+          style={{ padding: "0 10px", marginBottom: "15px" }}
+        >
+          <span>خصم الفتره: </span>
+
+          <span className={classes.storNumber2} style={{ color: "#0ccf87" }}>
+            {couponData.data.is_fixed_discount ? couponData.data.period_discount : couponData.data.new_period_discount}
+          </span>
+          <span style={{ color: "gray" }}> ر.س </span>
+        </Grid>
+      ) : null}
+
+      {couponData.data !== undefined &&
+        couponData.data.coupon_discount &&
+        couponData.data.is_coupon_valid ? (
+        <Grid
+          item
+          md={12}
+          xs={12}
+          style={{ padding: "0 10px", marginBottom: "15px" }}
+        >
+          <span>خصم كوبون: </span>
+          <span className={classes.storNumber2} style={{ color: "#0ccf87" }}>
+            {couponData.data.coupon_discount}
           </span>
           <span style={{ color: "gray" }}> ر.س </span>
         </Grid>
@@ -245,7 +261,7 @@ const Coupon = ({
         </div>
 
         {couponData.data !== undefined &&
-          couponData.data.residual_amount 
+          couponData.data.residual_amount
           ? (
             <Grid
               item
@@ -254,9 +270,9 @@ const Coupon = ({
               style={{ padding: "0 10px", marginBottom: "15px" }}
             >
               <span> {
-            couponData.data.is_coupon_valid
-            ||
-            couponData.data.period_discount != 0 ? 'المبلغ بعد الخصم:' : 'المبلغ الاجمالي : ' } </span>
+                couponData.data.is_coupon_valid
+                  ||
+                  couponData.data.period_discount != 0 ? 'المبلغ بعد الخصم:' : 'المبلغ الاجمالي : '} </span>
 
               <span className={classes.storNumber2} style={{ color: "#0ccf87" }}>
                 {couponData.data.residual_amount}
